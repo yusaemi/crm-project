@@ -34,6 +34,7 @@
 - 使用Spring Security統一管理角色訪問權限。
 - 基於jwt作為SSO唯一識別的認證/授權方式
 - 搭配redis實現jwt註銷功能。
+- 為function撰寫unit test，確保功能不因擴充而影響
 
 ## Token-based authentication
 - Authentication/Authorizaiton
