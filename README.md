@@ -57,6 +57,6 @@
 - `docker build -t crm-project:v0.0.1 .`
 ##### docker image run :
 - `docker run -d -p 8080:8080 crm-project:v0.0.1`
-- [Open Loacl SwaggerUI](http://localhost:8080/crm-project/swagger-ui/index.html "Local SwaggerUI")
+- [Open Local SwaggerUI](http://localhost:8080/crm-project/swagger-ui/index.html "Local SwaggerUI")
 ##### cloud platform:
 - [SwaggerUI](https://crm-project-jvi6knj3iq-de.a.run.app/crm-project/swagger-ui/index.html "SwaggerUI")
