@@ -39,17 +39,21 @@ import static org.mockito.Mockito.when;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CrmProjectApplicationWebTest {
 
+    private final ObjectMapper objectMapper;
+
     @Autowired
-    ObjectMapper objectMapper;
+    public CrmProjectApplicationWebTest(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    UserDao userDaoMock;
+    private UserDao userDaoMock;
 
     @MockBean
-    ClientDao clientDaoMock;
+    private ClientDao clientDaoMock;
 
     private String superuserJwt;
     private String managerJwt;
