@@ -5,10 +5,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.micrometer.core.instrument.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,20 +21,15 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0.0
  **/
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
-
-    @Autowired
-    private String jwtSignKey;
-
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
-    @Autowired
-    UserDetailsService userDetailsService;
 
     private static final String AUTH_HEADER = "Authorization";
     private static final String JWT_BEARER = "Bearer";
     private static final long EXPIRATION_MINUTES = 30;
+
+    private final String jwtSignKey;
+    private final StringRedisTemplate stringRedisTemplate;
 
     public String generateJwt(UserProfile userProfile) {
         String username = userProfile.getUsername();
@@ -68,10 +61,6 @@ public class JwtUtil {
 
     public void deleteRedisJwt(String jwt) {
         stringRedisTemplate.delete(getUsername(jwt));
-    }
-
-    public UserDetails getUserDetails(String jwt) {
-        return userDetailsService.loadUserByUsername(getUsername(jwt));
     }
 
     public String getUsername(String jwt) {

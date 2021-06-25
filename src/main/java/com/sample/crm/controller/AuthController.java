@@ -6,7 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +22,12 @@ import javax.validation.Valid;
  * @version 1.0.0
  **/
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 @Api(tags = "Authentication Controller")
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     @ApiOperation(value = "Authentication and get jwt")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "jwt已取得") })

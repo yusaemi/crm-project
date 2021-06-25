@@ -37,23 +37,22 @@ import static org.mockito.Mockito.verify;
 class CrmProjectApplicationTests {
 
 	@Mock
-	ClientDao clientDaoMock;
+	private ClientDao clientDaoMock;
 
 	@Mock
-	CompanyDao companyDaoMock;
+	private CompanyDao companyDaoMock;
 
 	@Mock
-	UserUtil userUtilMock;
+	private UserUtil userUtilMock;
 
 	@InjectMocks
-	ClientService clientServiceMocks;
+	private ClientService clientServiceMocks;
 
 	@InjectMocks
-	CompanyService companyServiceMocks;
+	private CompanyService companyServiceMocks;
 
-	List<Client> clients;
-	List<Company> companies;
-	UserProfile userProfile;
+	private List<Client> clients;
+	private List<Company> companies;
 
 	@BeforeEach
 	public void beforeTest() {
@@ -75,7 +74,7 @@ class CrmProjectApplicationTests {
 		Mockito.when(companyDaoMock.findById(3)).thenThrow(new RuntimeException("companyDaoMock mock throw exception"));
 
 		Mockito.when(userUtilMock.getUserProfile()).thenReturn(
-				userProfile = UserProfile.builder()
+				UserProfile.builder()
 						.username("mockUsername")
 						.password("mockPwd")
 						.role("superuser").build()

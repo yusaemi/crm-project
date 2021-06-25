@@ -6,8 +6,8 @@ import com.sample.crm.repository.CompanyDao;
 import com.sample.crm.service.dto.CompanyResponse;
 import com.sample.crm.util.UserUtil;
 import com.sample.crm.vo.UserProfile;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,14 +22,12 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  **/
 @Service
+@RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class CompanyService {
 
-    @Autowired
-    private CompanyDao companyDao;
-
-    @Autowired
-    UserUtil userUtil;
+    private final CompanyDao companyDao;
+    private final UserUtil userUtil;
 
     public List<CompanyResponse> getCompanies() {
         List<Company> companies = companyDao.findAll();
