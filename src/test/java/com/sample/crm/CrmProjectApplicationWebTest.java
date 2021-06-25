@@ -6,13 +6,7 @@ import com.sample.crm.entity.Client;
 import com.sample.crm.entity.User;
 import com.sample.crm.repository.ClientDao;
 import com.sample.crm.repository.UserDao;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,14 +34,13 @@ import static org.mockito.Mockito.when;
 public class CrmProjectApplicationWebTest {
 
     private final ObjectMapper objectMapper;
+    private final MockMvc mockMvc;
 
     @Autowired
-    public CrmProjectApplicationWebTest(ObjectMapper objectMapper) {
+    public CrmProjectApplicationWebTest(ObjectMapper objectMapper, MockMvc mockMvc) {
         this.objectMapper = objectMapper;
+        this.mockMvc = mockMvc;
     }
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @MockBean
     private UserDao userDaoMock;
@@ -60,14 +53,15 @@ public class CrmProjectApplicationWebTest {
     private String operatorJwt;
     private Client client;
 
-    private String superuser = "superuser";
-    private String manager = "manager";
-    private String operator = "operator";
-    private String header = "Authorization";
-    private String jwtPrefix = "Bearer ";
+    private final String header = "Authorization";
+    private final String jwtPrefix = "Bearer ";
 
     @BeforeEach
     public void beforeTest() throws Exception {
+
+        final String superuser = "superuser";
+        final String manager = "manager";
+        final String operator = "operator";
 
         User superUser = User.builder()
                 .username(superuser)

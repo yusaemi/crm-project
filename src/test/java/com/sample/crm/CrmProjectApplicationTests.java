@@ -53,7 +53,6 @@ class CrmProjectApplicationTests {
 
 	private List<Client> clients;
 	private List<Company> companies;
-	private UserProfile userProfile;
 
 	@BeforeEach
 	public void beforeTest() {
@@ -75,7 +74,7 @@ class CrmProjectApplicationTests {
 		Mockito.when(companyDaoMock.findById(3)).thenThrow(new RuntimeException("companyDaoMock mock throw exception"));
 
 		Mockito.when(userUtilMock.getUserProfile()).thenReturn(
-				userProfile = UserProfile.builder()
+				UserProfile.builder()
 						.username("mockUsername")
 						.password("mockPwd")
 						.role("superuser").build()
