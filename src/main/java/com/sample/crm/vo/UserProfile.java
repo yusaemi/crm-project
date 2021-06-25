@@ -26,9 +26,7 @@ import java.util.List;
 public class UserProfile implements UserDetails, Serializable {
 
     private String username;
-
     private String password;
-
     private String role;
 
     @Override

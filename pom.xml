@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.5</version><!--update spring-boot version -->
+		<version>2.5.2</version><!--update spring-boot version -->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sample.crm</groupId>
@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.0</spring-cloud.version>
+		<spring-cloud.version>2020.0.3</spring-cloud.version>
 		<springfox.version>3.0.0</springfox.version>
 		<jjwt.version>0.9.1</jjwt.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>

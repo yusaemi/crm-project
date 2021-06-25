@@ -2,12 +2,13 @@ package com.sample.crm.config;
 
 import com.sample.crm.util.JwtUtil;
 import io.micrometer.core.instrument.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -26,22 +27,27 @@ import static java.util.Objects.isNull;
  * @version 1.0.0
  **/
 @Configuration
+@RequiredArgsConstructor
 public class TokenFilterConfig extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String jwt = jwtUtil.getJwt(httpServletRequest);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (StringUtils.isNotBlank(jwt) && isNull(authentication)) {
-            UserDetails userDetails = jwtUtil.getUserDetails(jwt);
+            UserDetails userDetails = getUserDetails(jwt);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
+    }
+
+    public UserDetails getUserDetails(String jwt) {
+        return userDetailsService.loadUserByUsername(jwtUtil.getUsername(jwt));
     }
 
 }

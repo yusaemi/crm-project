@@ -5,7 +5,7 @@ import com.sample.crm.repository.UserDao;
 import com.sample.crm.util.JwtUtil;
 import com.sample.crm.vo.UserProfile;
 import io.micrometer.core.instrument.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,29 +25,27 @@ import static java.util.Objects.nonNull;
  * @version 1.0.0
  **/
 @Service
+@RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class UserDetailsProcess implements UserDetailsService {
 
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final UserDao userDao;
+    private final JwtUtil jwtUtil;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        boolean isValid = true;
+        boolean valid = true;
         UserProfile userProfile = null;
 
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String requestURI = httpServletRequest.getRequestURI();
         if (StringUtils.isNotBlank(requestURI) && !requestURI.endsWith("/auth/login")) {
             String redisJwt = jwtUtil.getRedisJwt(username);
-            isValid = StringUtils.isNotBlank(redisJwt);
+            valid = StringUtils.isNotBlank(redisJwt);
         }
 
-        if (isValid) {
+        if (valid) {
             User user = userDao.findById(username).orElse(null);
             if (nonNull(user)) {
                 userProfile = UserProfile.builder()

@@ -1,7 +1,6 @@
 package com.sample.crm.config;
 
-import com.sample.crm.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,14 +11,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * SecurityConfig. 2020/11/20 11:26 上午
@@ -29,16 +23,12 @@ import javax.servlet.http.HttpServletResponse;
  **/
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements LogoutSuccessHandler {
+@RequiredArgsConstructor
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private LogoutSuccessHandler logoutSuccessHandler;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+    private final TokenFilterConfig tokenFilterConfig;
+    private final LogoutConfig logoutConfig;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -62,14 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Logo
                         "/swagger-ui/index.html",
                         "/webjars/**").anonymous()
                 .anyRequest().authenticated().and()
-                .addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .logout().logoutUrl("/auth/logout").logoutSuccessHandler(logoutSuccessHandler).and()
+                .addFilterBefore(tokenFilterConfig, UsernamePasswordAuthenticationFilter.class)
+                .logout().logoutUrl("/auth/logout").logoutSuccessHandler(logoutConfig).and()
                 .headers().cacheControl();
-    }
-
-    @Bean
-    public TokenFilterConfig authenticationTokenFilter() {
-        return new TokenFilterConfig();
     }
 
     @Override
@@ -77,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Logo
         web.ignoring().antMatchers("/h2-console/**");
     }
 
-    @Autowired
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
@@ -86,12 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Logo
     @Bean
     public AuthenticationManager customAuthenticationManager() throws Exception {
         return authenticationManager();
-    }
-
-    @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        String jwt = jwtUtil.getJwt(request);
-        jwtUtil.deleteRedisJwt(jwt);
     }
 
 }

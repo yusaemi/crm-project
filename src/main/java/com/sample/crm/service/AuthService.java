@@ -3,7 +3,7 @@ package com.sample.crm.service;
 import com.sample.crm.controller.request.UserRequest;
 import com.sample.crm.util.JwtUtil;
 import com.sample.crm.vo.UserProfile;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,14 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 1.0.0
  **/
 @Service
+@RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class AuthService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
 
     public String login(UserRequest request) {
         String username = request.getUsername();
