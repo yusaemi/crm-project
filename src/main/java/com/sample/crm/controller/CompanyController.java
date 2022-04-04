@@ -32,14 +32,14 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @ApiOperation(value = "查詢company清單")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "company清單已取得") })
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "company清單已取得")})
     @GetMapping("")
-    public ResponseEntity<List<CompanyResponse>> getCompanies(){
+    public ResponseEntity<List<CompanyResponse>> getCompanies() {
         return ResponseEntity.ok(companyService.getCompanies());
     }
 
     @ApiOperation(value = "新增company")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "company資料已新增") })
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "company資料已新增")})
     @PostMapping("")
     public ResponseEntity<Void> createCompany(@RequestBody @Valid CompanyRequest request) throws URISyntaxException {
         companyService.createCompany(request);
@@ -47,24 +47,24 @@ public class CompanyController {
     }
 
     @ApiOperation(value = "查詢company")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "company資料已取得") })
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "company資料已取得")})
     @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompany(@PathVariable("id") int id){
+    public ResponseEntity<Company> getCompany(@PathVariable("id") int id) {
         return ResponseEntity.ok(companyService.getCompany(id));
     }
 
     @ApiOperation(value = "更新company")
-    @ApiResponses(value = { @ApiResponse(code = 204, message = "company資料已更新") })
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "company資料已更新")})
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateCompany(@PathVariable("id") int id, @RequestBody @Valid CompanyRequest request){
+    public ResponseEntity<Void> updateCompany(@PathVariable("id") int id, @RequestBody @Valid CompanyRequest request) {
         companyService.updateCompany(id, request);
         return ResponseEntity.noContent().build();
     }
 
     @ApiOperation(value = "刪除company")
-    @ApiResponses(value = { @ApiResponse(code = 204, message = "company資料已刪除") })
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "company資料已刪除")})
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCompany(@PathVariable("id") int id){
+    public ResponseEntity<Void> deleteCompany(@PathVariable("id") int id) {
         companyService.deleteCompany(id);
         return ResponseEntity.noContent().build();
     }

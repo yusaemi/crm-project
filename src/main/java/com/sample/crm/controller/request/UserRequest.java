@@ -9,6 +9,6 @@ import com.sample.crm.entity.User;
  * @author sero
  * @version 1.0.0
  **/
-@JsonIgnoreProperties({ "role" })
+@JsonIgnoreProperties("role")
 public class UserRequest extends User {
 }

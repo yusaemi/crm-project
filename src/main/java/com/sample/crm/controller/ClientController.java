@@ -32,14 +32,14 @@ public class ClientController {
     private final ClientService clientService;
 
     @ApiOperation(value = "查詢client清單")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "client清單已取得") })
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "client清單已取得")})
     @GetMapping("")
-    public ResponseEntity<List<ClientResponse>> getClients(){
+    public ResponseEntity<List<ClientResponse>> getClients() {
         return ResponseEntity.ok(clientService.getClients());
     }
 
     @ApiOperation(value = "新增client")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "client資料已新增") })
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "client資料已新增")})
     @PostMapping("")
     public ResponseEntity<Void> createClient(@RequestBody @Valid ClientRequest request) throws URISyntaxException {
         clientService.createClient(request);
@@ -47,30 +47,30 @@ public class ClientController {
     }
 
     @ApiOperation(value = "查詢client")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "client資料已取得") })
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "client資料已取得")})
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClient(@PathVariable("id") int id){
+    public ResponseEntity<Client> getClient(@PathVariable("id") int id) {
         return ResponseEntity.ok(clientService.getClient(id));
     }
 
     @ApiOperation(value = "更新client")
-    @ApiResponses(value = { @ApiResponse(code = 204, message = "client資料已更新") })
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "client資料已更新")})
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateClient(@PathVariable("id") int id, @RequestBody @Valid ClientRequest request){
+    public ResponseEntity<Void> updateClient(@PathVariable("id") int id, @RequestBody @Valid ClientRequest request) {
         clientService.updateClient(id, request);
         return ResponseEntity.noContent().build();
     }
 
     @ApiOperation(value = "刪除client")
-    @ApiResponses(value = { @ApiResponse(code = 204, message = "client資料已刪除") })
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "client資料已刪除")})
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable("id") int id){
+    public ResponseEntity<Void> deleteClient(@PathVariable("id") int id) {
         clientService.deleteClient(id);
         return ResponseEntity.noContent().build();
     }
 
     @ApiOperation(value = "新增多筆client")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "多筆client資料已新增") })
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "多筆client資料已新增")})
     @PostMapping("/collection")
     public ResponseEntity<Void> createClients(@RequestBody @Valid List<ClientRequest> request) throws URISyntaxException {
         clientService.createClients(request);

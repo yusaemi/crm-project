@@ -13,14 +13,14 @@ import java.util.UUID;
 @SpringBootApplication
 public class CrmProjectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CrmProjectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CrmProjectApplication.class, args);
+    }
 
-	@Bean
-	public String jwtSignKey() {
-		byte[] b = Sha512DigestUtils.sha(UUID.randomUUID().toString());
-		return new BigInteger(1, b).toString(16).toUpperCase();
-	}
+    @Bean
+    public String jwtSignKey() {
+        byte[] b = Sha512DigestUtils.sha(UUID.randomUUID().toString());
+        return new BigInteger(1, b).toString(16).toUpperCase();
+    }
 
 }

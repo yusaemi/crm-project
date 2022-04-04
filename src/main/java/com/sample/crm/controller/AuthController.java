@@ -30,9 +30,9 @@ public class AuthController {
     private final AuthService authService;
 
     @ApiOperation(value = "Authentication and get jwt")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "jwt已取得") })
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "jwt已取得")})
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid UserRequest request){
+    public ResponseEntity<String> login(@RequestBody @Valid UserRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 

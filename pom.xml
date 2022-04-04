@@ -15,7 +15,7 @@
 	<description>CRM project(API only)</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<spring-cloud.version>2020.0.5</spring-cloud.version>
 		<springfox.version>3.0.0</springfox.version>
 		<jjwt.version>0.9.1</jjwt.version>
@@ -40,6 +40,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
 			<version>2.2.5.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-jwt</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
