@@ -31,9 +31,9 @@ public class UserProfile implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String ROLE_PREFIX = "ROLE_";
+        String rolePrefix = "ROLE_";
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + role));
+        grantedAuthorities.add(new SimpleGrantedAuthority(rolePrefix + role));
         return grantedAuthorities;
     }
 

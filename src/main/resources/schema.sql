@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS company;
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS employee;
 
 CREATE TABLE company (
   id INT AUTO_INCREMENT,
@@ -27,7 +27,7 @@ CREATE TABLE client (
   FOREIGN KEY (company_id) REFERENCES company(id)
 );
 
-CREATE TABLE user (
+CREATE TABLE employee (
   username VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   role VARCHAR(255) NOT NULL,

@@ -1,7 +1,7 @@
 package com.sample.crm.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sample.crm.entity.User;
+import com.sample.crm.entity.Employee;
 
 /**
  * LoginInfo. 2020/11/21 1:21 上午
@@ -9,6 +9,6 @@ import com.sample.crm.entity.User;
  * @author sero
  * @version 1.0.0
  **/
-@JsonIgnoreProperties({ "role" })
-public class UserRequest extends User {
+@JsonIgnoreProperties("role")
+public class EmployeeRequest extends Employee {
 }

@@ -1,7 +1,7 @@
 package com.sample.crm.service;
 
-import com.sample.crm.entity.User;
-import com.sample.crm.repository.UserDao;
+import com.sample.crm.entity.Employee;
+import com.sample.crm.repository.EmployeeDao;
 import com.sample.crm.util.JwtUtil;
 import com.sample.crm.vo.UserProfile;
 import io.micrometer.core.instrument.util.StringUtils;
@@ -29,7 +29,7 @@ import static java.util.Objects.nonNull;
 @Transactional(rollbackFor = Exception.class)
 public class UserDetailsProcess implements UserDetailsService {
 
-    private final UserDao userDao;
+    private final EmployeeDao employeeDao;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -46,12 +46,12 @@ public class UserDetailsProcess implements UserDetailsService {
         }
 
         if (valid) {
-            User user = userDao.findById(username).orElse(null);
-            if (nonNull(user)) {
+            Employee employee = employeeDao.findById(username).orElse(null);
+            if (nonNull(employee)) {
                 userProfile = UserProfile.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .role(user.getRole())
+                        .username(employee.getUsername())
+                        .password(employee.getPassword())
+                        .role(employee.getRole())
                         .build();
             }
         }

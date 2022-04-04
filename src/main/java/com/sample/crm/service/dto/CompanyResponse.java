@@ -9,6 +9,6 @@ import com.sample.crm.entity.Company;
  * @author sero
  * @version 1.0.0
  **/
-@JsonIgnoreProperties({ "clients" })
+@JsonIgnoreProperties("clients")
 public class CompanyResponse extends Company {
 }

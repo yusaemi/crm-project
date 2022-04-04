@@ -1,11 +1,11 @@
 package com.sample.crm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sample.crm.controller.request.UserRequest;
+import com.sample.crm.controller.request.EmployeeRequest;
 import com.sample.crm.entity.Client;
-import com.sample.crm.entity.User;
+import com.sample.crm.entity.Employee;
 import com.sample.crm.repository.ClientDao;
-import com.sample.crm.repository.UserDao;
+import com.sample.crm.repository.EmployeeDao;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -43,7 +43,7 @@ public class CrmProjectApplicationWebTest {
     }
 
     @MockBean
-    private UserDao userDaoMock;
+    private EmployeeDao employeeDaoMock;
 
     @MockBean
     private ClientDao clientDaoMock;
@@ -63,25 +63,25 @@ public class CrmProjectApplicationWebTest {
         final String manager = "manager";
         final String operator = "operator";
 
-        User superUser = User.builder()
+        Employee superEmployee = Employee.builder()
                 .username(superuser)
                 .password("$2a$12$2JhdvLvF4yqAQ5Dntc7P.OEuo7QJeZJNpjT/yAIsxjzBKZVwrk7k6")
                 .role(superuser)
                 .build();
-        User managerUser = User.builder()
+        Employee managerEmployee = Employee.builder()
                 .username(manager)
                 .password("$2a$12$iOXbZfWuAB.3fE3IOQ7cVuAXY7c8.p6JNkb7MiF31JI07qImL7ybm")
                 .role(manager)
                 .build();
-        User operatorUser = User.builder()
+        Employee operatorEmployee = Employee.builder()
                 .username(operator)
                 .password("$2a$12$MzLp/30NfG/gCLH.bPKuyeKq2ECPq5jAXbax0w66IePYm2zcfw4cK")
                 .role(operator)
                 .build();
         
-        when(userDaoMock.findById(superuser)).thenReturn(Optional.of(superUser));
-        when(userDaoMock.findById(manager)).thenReturn(Optional.of(managerUser));
-        when(userDaoMock.findById(operator)).thenReturn(Optional.of(operatorUser));
+        when(employeeDaoMock.findById(superuser)).thenReturn(Optional.of(superEmployee));
+        when(employeeDaoMock.findById(manager)).thenReturn(Optional.of(managerEmployee));
+        when(employeeDaoMock.findById(operator)).thenReturn(Optional.of(operatorEmployee));
 
         client = Client.builder().id(1).companyId(1).name("mockClient1").build();
         when(clientDaoMock.findById(1)).thenReturn(Optional.of(client));
@@ -90,7 +90,7 @@ public class CrmProjectApplicationWebTest {
                 MockMvcRequestBuilders.post("/auth/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(UserRequest.builder()
+                        .content(objectMapper.writeValueAsString(EmployeeRequest.builder()
                                 .username(superuser)
                                 .password("pwd")
                                 .build()))
@@ -100,7 +100,7 @@ public class CrmProjectApplicationWebTest {
                 MockMvcRequestBuilders.post("/auth/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(UserRequest.builder()
+                        .content(objectMapper.writeValueAsString(EmployeeRequest.builder()
                                 .username(manager)
                                 .password("pwd")
                                 .build()))
@@ -110,7 +110,7 @@ public class CrmProjectApplicationWebTest {
                 MockMvcRequestBuilders.post("/auth/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(UserRequest.builder()
+                        .content(objectMapper.writeValueAsString(EmployeeRequest.builder()
                                 .username(operator)
                                 .password("pwd")
                                 .build()))
