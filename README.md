@@ -1,11 +1,11 @@
-# CRM Project
+# CRM Project(Deprecated)
 
 ## tools/technologies 使用技術列表
-- JDK11
+- JDK17
 - Apache Maven
-- Spring Boot 2.4
+- Spring Boot 2.5.8
 - Spring Boot actuator
-- Spring Cloud 2020.0
+- Spring Cloud 2020.0.5
 - Spring Cloud sleuth
 - Spring Cloud OAauth2
 - Spring Data JPA

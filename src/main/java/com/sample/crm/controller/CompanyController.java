@@ -4,13 +4,19 @@ import com.sample.crm.controller.request.CompanyRequest;
 import com.sample.crm.entity.Company;
 import com.sample.crm.service.CompanyService;
 import com.sample.crm.service.dto.CompanyResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -26,45 +32,45 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/companies")
-@Api(tags = "Company Controller")
+@Tag(name = "Company Controller")
 public class CompanyController {
 
     private final CompanyService companyService;
 
-    @ApiOperation(value = "查詢company清單")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "company清單已取得") })
+    @Operation(summary = "查詢company清單")
+    @ApiResponse(responseCode = "200", description = "company清單已取得")
     @GetMapping("")
-    public ResponseEntity<List<CompanyResponse>> getCompanies(){
+    public ResponseEntity<List<CompanyResponse>> getCompanies() {
         return ResponseEntity.ok(companyService.getCompanies());
     }
 
-    @ApiOperation(value = "新增company")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "company資料已新增") })
+    @Operation(summary = "新增company")
+    @ApiResponse(responseCode = "201", description = "company資料已新增")
     @PostMapping("")
     public ResponseEntity<Void> createCompany(@RequestBody @Valid CompanyRequest request) throws URISyntaxException {
         companyService.createCompany(request);
         return ResponseEntity.created(new URI("/")).build();
     }
 
-    @ApiOperation(value = "查詢company")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "company資料已取得") })
+    @Operation(summary = "查詢company")
+    @ApiResponse(responseCode = "200", description = "company資料已取得")
     @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompany(@PathVariable("id") int id){
+    public ResponseEntity<Company> getCompany(@PathVariable("id") int id) {
         return ResponseEntity.ok(companyService.getCompany(id));
     }
 
-    @ApiOperation(value = "更新company")
-    @ApiResponses(value = { @ApiResponse(code = 204, message = "company資料已更新") })
+    @Operation(summary = "更新company")
+    @ApiResponse(responseCode = "204", description = "company資料已更新")
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateCompany(@PathVariable("id") int id, @RequestBody @Valid CompanyRequest request){
+    public ResponseEntity<Void> updateCompany(@PathVariable("id") int id, @RequestBody @Valid CompanyRequest request) {
         companyService.updateCompany(id, request);
         return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "刪除company")
-    @ApiResponses(value = { @ApiResponse(code = 204, message = "company資料已刪除") })
+    @Operation(summary = "刪除company")
+    @ApiResponse(responseCode = "204", description = "company資料已刪除")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCompany(@PathVariable("id") int id){
+    public ResponseEntity<Void> deleteCompany(@PathVariable("id") int id) {
         companyService.deleteCompany(id);
         return ResponseEntity.noContent().build();
     }

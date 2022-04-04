@@ -90,7 +90,8 @@ class CrmProjectApplicationTests {
 	void getClients() {
 		List<ClientResponse> clientResponses = clientServiceMocks.getClients();
 		verify(clientDaoMock, times(1)).findAll();
-		Assertions.assertEquals(clientResponses, this.clients);
+		Assertions.assertEquals(clientResponses.size(), this.clients.size());
+		Assertions.assertEquals(clientResponses.get(0).getId(), this.clients.get(0).getId());
 	}
 
 	@Order(2)
@@ -114,7 +115,7 @@ class CrmProjectApplicationTests {
 		}
 		verify(clientDaoMock, times(1)).findById(1);
 		verify(clientDaoMock, times(1)).findById(3);
-		Assertions.assertEquals(clientResponse, this.clients.get(0));
+		Assertions.assertEquals(clientResponse.getId(), this.clients.get(0).getId());
 	}
 
 	@Order(4)

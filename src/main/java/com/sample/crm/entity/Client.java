@@ -1,11 +1,11 @@
 package com.sample.crm.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,13 +25,14 @@ import java.time.LocalDateTime;
  * @author sero
  * @version 1.0.0
  **/
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "client")
-@ApiModel(description = "client資訊")
+@Schema(name = "client資訊")
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,37 +40,37 @@ public class Client implements Serializable {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "序號", required = true)
+    @Schema(name = "序號", requiredMode = Schema.RequiredMode.REQUIRED)
     private int id;
 
     @Column(name = "company_id", nullable = false)
-    @ApiModelProperty(value = "compant序號", required = true)
+    @Schema(name = "company序號", requiredMode = Schema.RequiredMode.REQUIRED)
     private int companyId;
 
     @Column(nullable = false)
-    @ApiModelProperty(value = "姓名", required = true)
+    @Schema(name = "姓名", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 
-    @ApiModelProperty(value = "電子郵件")
+    @Schema(name = "電子郵件")
     private String email;
 
-    @ApiModelProperty(value = "聯絡電話")
+    @Schema(name = "聯絡電話")
     private String phone;
 
     @Column(name = "created_by")
-    @ApiModelProperty(value = "建立人員")
+    @Schema(name = "建立人員")
     private String createdBy;
 
     @Column(name = "created_at")
-    @ApiModelProperty(value = "建立時間")
+    @Schema(name = "建立時間")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_by")
-    @ApiModelProperty(value = "更新人員")
+    @Schema(name = "更新人員")
     private String updatedBy;
 
     @Column(name = "updated_at")
-    @ApiModelProperty(value = "更新時間")
+    @Schema(name = "更新時間")
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
