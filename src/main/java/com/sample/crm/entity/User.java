@@ -1,7 +1,6 @@
 package com.sample.crm.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -31,22 +30,22 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
-@ApiModel(description = "user資訊")
+@Schema(name = "user資訊")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(nullable = false)
-    @ApiModelProperty(value = "帳號", required = true)
+    @Schema(name = "帳號", requiredMode = Schema.RequiredMode.REQUIRED)
     private String username;
 
     @Column(nullable = false)
-    @ApiModelProperty(value = "密碼", required = true)
+    @Schema(name = "密碼", requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
 
     @Column(nullable = false)
-    @ApiModelProperty(value = "所屬角色", required = true)
+    @Schema(name = "所屬角色", requiredMode = Schema.RequiredMode.REQUIRED)
     private String role;
 
 }

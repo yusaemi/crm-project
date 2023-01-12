@@ -1,7 +1,6 @@
 package com.sample.crm.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -37,7 +36,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "company")
-@ApiModel(description = "company資訊")
+@Schema(name = "company資訊")
 public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,30 +44,30 @@ public class Company implements Serializable {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "序號", required = true)
+    @Schema(name = "序號", requiredMode = Schema.RequiredMode.REQUIRED)
     private int id;
 
     @Column(nullable = false)
-    @ApiModelProperty(value = "名稱", required = true)
+    @Schema(name = "名稱", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 
-    @ApiModelProperty(value = "地址")
+    @Schema(name = "地址")
     private String address;
 
     @Column(name = "created_by")
-    @ApiModelProperty(value = "建立人員")
+    @Schema(name = "建立人員")
     private String createdBy;
 
     @Column(name = "created_at")
-    @ApiModelProperty(value = "建立時間")
+    @Schema(name = "建立時間")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_by")
-    @ApiModelProperty(value = "更新人員")
+    @Schema(name = "更新人員")
     private String updatedBy;
 
     @Column(name = "updated_at")
-    @ApiModelProperty(value = "更新時間")
+    @Schema(name = "更新時間")
     private LocalDateTime updatedAt;
 
     @ToString.Exclude
