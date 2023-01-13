@@ -36,20 +36,20 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/actuator/health", "/auth/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/**").hasAnyRole("superuser", "operator")
-                .antMatchers(HttpMethod.PUT, "/**").hasAnyRole("superuser", "manager")
-                .antMatchers(HttpMethod.DELETE, "/**").hasAnyRole("superuser", "manager")
-                .antMatchers(
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/actuator/health", "/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/**").hasAnyRole("superuser", "operator")
+                .requestMatchers(HttpMethod.PUT, "/**").hasAnyRole("superuser", "manager")
+                .requestMatchers(HttpMethod.DELETE, "/**").hasAnyRole("superuser", "manager")
+                .requestMatchers(
                         HttpMethod.GET,
                         "/*.html",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js"
+                        "/*/*.html",
+                        "/*/*.css",
+                        "/*/*.js"
                 ).permitAll()
-                .antMatchers("/*/api-docs",
+                .requestMatchers("/*/api-docs",
                         "/swagger-resources/**",
                         "/swagger-ui/index.html",
                         "/webjars/**").anonymous()
@@ -62,7 +62,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().antMatchers("/h2-console/**");
+        return web -> web.ignoring().requestMatchers("/h2-console/**");
     }
 
     @Bean

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Log存放路徑 -->
+    <springProperty scope="context" name="log.path" source="logback.path"/>
+    <!-- Log分類 -->
+    <springProperty scope="context" name="log.name" source="logback.name"/>
+    <!-- Log輸出格式 -->
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] traceId:[%X{traceId:-}] spanId:[%X{spanId:-}] %-5level %logger{20} - [%method,%line] - %msg%n"/>
+    <!-- Log最大的歷史天數 -->
+    <property name="log.keep" value="30"/>
+    <!-- Log保留最大容量 -->
+    <property name="log.totalSizeCap" value="10GB"/>
+    <!-- Log文件編碼 -->
+    <property name="log.charset" value="UTF-8"/>
+
+    <!-- console輸出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 系統Log輸出 -->
+    <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/${log.name}-info.log</file>
+        <!-- 循環政策：基於時間創建Log文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Log文件名格式 -->
+            <fileNamePattern>${log.path}/${log.name}-info.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <!-- Log最大的歷史天數 -->
+            <maxHistory>${log.keep}</maxHistory>
+            <!--Log最大容量-->
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <charset>${log.charset}</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 過濾的級別 -->
+            <level>INFO</level>
+            <!-- 匹配時的操作：接收（記錄） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配時的操作：拒絕（不記錄） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/${log.name}-error.log</file>
+        <!-- 循環政策：基於時間創建Log文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Log文件名格式 -->
+            <fileNamePattern>${log.path}/${log.name}-error.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <!-- Log最大的歷史天數 -->
+            <maxHistory>${log.keep}</maxHistory>
+            <!--Log最大容量-->
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>${log.charset}</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 過濾的級別 -->
+            <level>ERROR</level>
+            <!-- 匹配時的操作：接收（記錄） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配時的操作：拒絕（不記錄） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+    </appender>
+
+    <appender name="file_all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/${log.name}-all.log</file>
+        <!-- 循環政策：基於時間創建Log文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Log文件名格式 -->
+            <fileNamePattern>${log.path}/${log.name}-all.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <!-- Log最大的歷史天數 -->
+            <maxHistory>${log.keep}</maxHistory>
+            <!--Log最大容量-->
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>${log.charset}</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- 输出SQL至console和log -->
+    <logger name="org.hibernate.SQL" additivity="false" level="DEBUG">
+        <appender-ref ref="file_all" />
+        <appender-ref ref="console"/>
+    </logger>
+    <!-- 输出SQL Param至console和log -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" additivity="false" level="TRACE">
+        <appender-ref ref="file_all" />
+        <appender-ref ref="console"/>
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="file_all"/>
+        <appender-ref ref="console"/>
+    </root>
+
+    <root level="error">
+        <appender-ref ref="file_error"/>
+    </root>
+
+    <!--系統操作Log默認級別-->
+    <root level="info">
+        <appender-ref ref="file_info"/>
+    </root>
+
+</configuration>

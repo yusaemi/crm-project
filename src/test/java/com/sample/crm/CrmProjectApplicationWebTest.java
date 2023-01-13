@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CrmProjectApplicationWebTest {
+class CrmProjectApplicationWebTest {
 
     private final ObjectMapper objectMapper;
     private final MockMvc mockMvc;
@@ -125,23 +125,23 @@ public class CrmProjectApplicationWebTest {
     @Order(1)
     @DisplayName("Permission - Test view permission")
     @Test
-    public void permissionViewTest() throws Exception {
+    void permissionViewTest() throws Exception {
 
-        MvcResult superuserGetClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.get("/clients/1")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(header, jwtPrefix + superuserJwt)
         ).andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn();
 
-        MvcResult managerGetClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.get("/clients/1")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(header, jwtPrefix + managerJwt)
         ).andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn();
 
-        MvcResult operatorGetClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.get("/clients/1")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -153,7 +153,7 @@ public class CrmProjectApplicationWebTest {
     @Order(2)
     @DisplayName("Permission - Test modify permission")
     @Test
-    public void permissionModifyTest() throws Exception {
+    void permissionModifyTest() throws Exception {
 
         String clientJson = objectMapper.writeValueAsString(client);
 
@@ -166,7 +166,7 @@ public class CrmProjectApplicationWebTest {
                         .content(clientJson)
         ).andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(MockMvcResultHandlers.print()).andReturn();
 
-        MvcResult managerPutClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.put("/clients/1")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -176,7 +176,7 @@ public class CrmProjectApplicationWebTest {
         ).andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(MockMvcResultHandlers.print()).andReturn();
 
         try {
-            MvcResult operatorPutClientResult = mockMvc.perform(
+            mockMvc.perform(
                     MockMvcRequestBuilders.put("/clients/1")
                             .accept(MediaType.APPLICATION_JSON)
                             .contentType(MediaType.APPLICATION_JSON)
@@ -193,16 +193,16 @@ public class CrmProjectApplicationWebTest {
     @Order(3)
     @DisplayName("Permission - Test delete permission")
     @Test
-    public void permissionDeleteTest() throws Exception {
+    void permissionDeleteTest() throws Exception {
 
-        MvcResult superuserDeleteClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.delete("/clients/1")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(header, jwtPrefix + superuserJwt)
         ).andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(MockMvcResultHandlers.print()).andReturn();
 
-        MvcResult managerDeleteClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.delete("/clients/1")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -210,7 +210,7 @@ public class CrmProjectApplicationWebTest {
         ).andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(MockMvcResultHandlers.print()).andReturn();
 
         try {
-            MvcResult operatorDeleteClientResult = mockMvc.perform(
+            mockMvc.perform(
                     MockMvcRequestBuilders.delete("/clients/1")
                             .accept(MediaType.APPLICATION_JSON)
                             .contentType(MediaType.APPLICATION_JSON)
@@ -225,11 +225,11 @@ public class CrmProjectApplicationWebTest {
     @Order(4)
     @DisplayName("Permission - Test create permission")
     @Test
-    public void permissionCreateTest() throws Exception {
+    void permissionCreateTest() throws Exception {
 
         String clientJson = objectMapper.writeValueAsString(client);
 
-        MvcResult superuserPostClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.post("/clients")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -238,7 +238,7 @@ public class CrmProjectApplicationWebTest {
         ).andExpect(MockMvcResultMatchers.status().isCreated()).andDo(MockMvcResultHandlers.print()).andReturn();
 
         try {
-            MvcResult managerPostClientResult = mockMvc.perform(
+            mockMvc.perform(
                     MockMvcRequestBuilders.post("/clients")
                             .accept(MediaType.APPLICATION_JSON)
                             .contentType(MediaType.APPLICATION_JSON)
@@ -250,7 +250,7 @@ public class CrmProjectApplicationWebTest {
             Assertions.assertEquals("Status expected:<201> but was:<403>", e.getMessage());
         }
 
-        MvcResult operatorPostClientResult = mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.post("/clients")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
