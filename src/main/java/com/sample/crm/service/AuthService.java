@@ -1,6 +1,6 @@
 package com.sample.crm.service;
 
-import com.sample.crm.controller.request.UserRequest;
+import com.sample.crm.controller.request.EmployeeRequest;
 import com.sample.crm.util.JwtUtil;
 import com.sample.crm.vo.UserProfile;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    public String login(UserRequest request) {
+    public String login(EmployeeRequest request) {
         String username = request.getUsername();
         String password = request.getPassword();
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);

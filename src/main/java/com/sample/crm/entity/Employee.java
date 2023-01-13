@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * User. 2020/11/21 1:04 上午
+ * Employee. 2020/11/21 1:04 上午
  *
  * @author sero
  * @version 1.0.0
@@ -29,9 +29,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
-@Schema(name = "user資訊")
-public class User implements Serializable {
+@Table(name = "employee")
+@Schema(name = "employee資訊")
+public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

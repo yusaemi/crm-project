@@ -1,6 +1,6 @@
 package com.sample.crm.controller;
 
-import com.sample.crm.controller.request.UserRequest;
+import com.sample.crm.controller.request.EmployeeRequest;
 import com.sample.crm.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,7 +31,7 @@ public class AuthController {
     @Operation(summary = "Authentication and get jwt")
     @ApiResponse(responseCode = "200", description = "jwt已取得")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid UserRequest request) {
+    public ResponseEntity<String> login(@RequestBody @Valid EmployeeRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
