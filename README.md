@@ -1,14 +1,12 @@
-# CRM Project(Deprecated)
+# CRM Project
 
 ## tools/technologies 使用技術列表
 - JDK17
 - Apache Maven
-- Spring Boot 2.5.8
+- Spring Boot 3.0.1
 - Spring Boot actuator
-- Spring Cloud 2020.0.5
-- Spring Cloud sleuth
-- Spring Cloud OAauth2
 - Spring Data JPA
+- Micrometer Tracing
 - H2 Database
 - Embedded-redis
 - jjwt
@@ -37,7 +35,7 @@
 - 為function撰寫unit test，確保功能不因擴充而影響
 
 ## Token-based authentication
-- Authentication/Authorizaiton
+- Authentication/Authorization
 - stateless authentication
 - 實現登入、登出、授權請求
 

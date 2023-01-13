@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * ClientService. 2020/11/22 4:22 上午
@@ -35,7 +34,7 @@ public class ClientService {
             ClientResponse clientResponse = new ClientResponse();
             BeanUtils.copyProperties(client, clientResponse);
             return clientResponse;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     public void createClient(ClientRequest request) {
@@ -70,8 +69,7 @@ public class ClientService {
     }
 
     public void deleteClient(int id) {
-        clientDao.findById(id).orElseThrow(() -> new RuntimeException("client is not exist!"));
-        clientDao.deleteById(id);
+        clientDao.findById(id).ifPresent(clientDao::delete);
     }
 
     public void createClients(List<ClientRequest> request) {

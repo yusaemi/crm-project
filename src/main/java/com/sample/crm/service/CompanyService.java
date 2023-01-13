@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * CompanyService. 2020/11/22 2:36 上午
@@ -35,7 +34,7 @@ public class CompanyService {
             CompanyResponse companyResponse = new CompanyResponse();
             BeanUtils.copyProperties(company, companyResponse);
             return companyResponse;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     public void createCompany(CompanyRequest request) {
@@ -66,8 +65,7 @@ public class CompanyService {
     }
 
     public void deleteCompany(int id) {
-        companyDao.findById(id).orElseThrow(() -> new RuntimeException("company is not exist!"));
-        companyDao.deleteById(id);
+        companyDao.findById(id).ifPresent(companyDao::delete);
     }
 
 }

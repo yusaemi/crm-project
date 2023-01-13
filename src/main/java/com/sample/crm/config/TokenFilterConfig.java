@@ -1,7 +1,7 @@
 package com.sample.crm.config;
 
 import com.sample.crm.util.JwtUtil;
-import io.micrometer.core.instrument.util.StringUtils;
+import com.sample.crm.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,10 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static java.util.Objects.isNull;
@@ -37,7 +37,7 @@ public class TokenFilterConfig extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String jwt = jwtUtil.getJwt(httpServletRequest);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (StringUtils.isNotBlank(jwt) && isNull(authentication)) {
+        if (StringUtil.isNotBlank(jwt) && isNull(authentication)) {
             UserDetails userDetails = getUserDetails(jwt);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));

@@ -99,7 +99,7 @@ class CrmProjectApplicationTests {
 	@Test
 	void createClient() {
 		clientServiceMocks.createClient(new ClientRequest());
-		verify(clientDaoMock, times(1)).save(any());
+		verify(clientDaoMock, times(1)).save(any(Client.class));
 	}
 
 	@Order(3)
@@ -122,16 +122,17 @@ class CrmProjectApplicationTests {
 	@DisplayName("ClientService - Test updateClient")
 	@Test
 	void updateClient() {
-		clientServiceMocks.updateClient(1, new ClientRequest());
+		ClientRequest clientRequest = new ClientRequest();
+		clientServiceMocks.updateClient(1, clientRequest);
 		try {
-			clientServiceMocks.updateClient(3, new ClientRequest());
+			clientServiceMocks.updateClient(3, clientRequest);
 			Assertions.fail();
 		} catch (RuntimeException ex) {
 			Assertions.assertEquals("clientDaoMock mock throw exception", ex.getMessage());
 		}
 		verify(clientDaoMock, times(1)).findById(1);
 		verify(clientDaoMock, times(1)).findById(3);
-		verify(clientDaoMock, times(1)).save(any());
+		verify(clientDaoMock, times(1)).save(any(Client.class));
 	}
 
 	@Order(5)
@@ -147,7 +148,7 @@ class CrmProjectApplicationTests {
 		}
 		verify(clientDaoMock, times(1)).findById(1);
 		verify(clientDaoMock, times(1)).findById(3);
-		verify(clientDaoMock, times(1)).deleteById(1);
+		verify(clientDaoMock, times(1)).delete(any(Client.class));
 	}
 
 	@Order(6)
@@ -160,7 +161,7 @@ class CrmProjectApplicationTests {
 				new ClientRequest()
 		);
 		clientServiceMocks.createClients(clientRequests);
-		verify(clientDaoMock, times(3)).save(any());
+		verify(clientDaoMock, times(3)).save(any(Client.class));
 	}
 
 	@Order(7)
@@ -177,7 +178,7 @@ class CrmProjectApplicationTests {
 	@Test
 	void createCompany() {
 		companyServiceMocks.createCompany(new CompanyRequest());
-		verify(companyDaoMock, times(1)).save(any());
+		verify(companyDaoMock, times(1)).save(any(Company.class));
 	}
 
 	@Order(9)
@@ -200,16 +201,17 @@ class CrmProjectApplicationTests {
 	@DisplayName("CompanyService - Test updateCompany")
 	@Test
 	void updateCompany() {
-		companyServiceMocks.updateCompany(1, new CompanyRequest());
+		CompanyRequest companyRequest = new CompanyRequest();
+		companyServiceMocks.updateCompany(1, companyRequest);
 		try {
-			companyServiceMocks.updateCompany(3, new CompanyRequest());
+			companyServiceMocks.updateCompany(3, companyRequest);
 			Assertions.fail();
 		} catch (RuntimeException ex) {
 			Assertions.assertEquals("companyDaoMock mock throw exception", ex.getMessage());
 		}
 		verify(companyDaoMock, times(1)).findById(1);
 		verify(companyDaoMock, times(1)).findById(3);
-		verify(companyDaoMock, times(1)).save(any());
+		verify(companyDaoMock, times(1)).save(any(Company.class));
 	}
 
 	@Order(11)
@@ -225,7 +227,7 @@ class CrmProjectApplicationTests {
 		}
 		verify(companyDaoMock, times(1)).findById(1);
 		verify(companyDaoMock, times(1)).findById(3);
-		verify(companyDaoMock, times(1)).deleteById(1);
+		verify(companyDaoMock, times(1)).delete(any(Company.class));
 	}
 
 	@Test
