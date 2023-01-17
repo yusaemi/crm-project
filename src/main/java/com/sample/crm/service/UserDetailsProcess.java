@@ -3,8 +3,8 @@ package com.sample.crm.service;
 import com.sample.crm.entity.Employee;
 import com.sample.crm.repository.EmployeeDao;
 import com.sample.crm.util.JwtUtil;
+import com.sample.crm.util.StringUtil;
 import com.sample.crm.vo.UserProfile;
-import io.micrometer.core.instrument.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,9 +40,9 @@ public class UserDetailsProcess implements UserDetailsService {
 
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String requestURI = httpServletRequest.getRequestURI();
-        if (StringUtils.isNotBlank(requestURI) && !requestURI.endsWith("/auth/login")) {
+        if (StringUtil.isNotBlank(requestURI) && !requestURI.endsWith("/auth/login")) {
             String redisJwt = jwtUtil.getRedisJwt(username);
-            valid = StringUtils.isNotBlank(redisJwt);
+            valid = StringUtil.isNotBlank(redisJwt);
         }
 
         if (valid) {

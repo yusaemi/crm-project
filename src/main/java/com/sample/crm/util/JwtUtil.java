@@ -4,7 +4,6 @@ import com.sample.crm.vo.UserProfile;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.micrometer.core.instrument.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -47,7 +46,7 @@ public class JwtUtil {
 
     public String getJwt(HttpServletRequest httpServletRequest) {
         String jwt = httpServletRequest.getHeader(AUTH_HEADER);
-        return StringUtils.isBlank(jwt) ? jwt : jwt.replaceFirst(JWT_BEARER, "").trim();
+        return StringUtil.isBlank(jwt) ? jwt : jwt.replaceFirst(JWT_BEARER, "").trim();
     }
 
     public boolean checkRedisJwt(String jwt) {

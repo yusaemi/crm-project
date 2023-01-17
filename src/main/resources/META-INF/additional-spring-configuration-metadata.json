@@ -4,5 +4,15 @@
       "name": "spring.data.redis.host",
       "type": "java.lang.String",
       "description": "Description for spring.data.redis.host."
-  }
-] }
+    },
+    {
+      "name": "logback.path",
+      "type": "java.lang.String",
+      "description": "Description for logback.path."
+    },
+    {
+      "name": "logback.name",
+      "type": "java.lang.String",
+      "description": "Description for logback.name."
+    }
+  ] }
