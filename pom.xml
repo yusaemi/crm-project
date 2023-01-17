@@ -134,9 +134,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.5.8</version>
+				<!-- 解決spring-boot:run console中文亂碼 -->
 				<configuration>
-					<fork>true</fork>
+					<!-- 新增jvm參數 -->
+					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
 				</configuration>
 			</plugin>
 		</plugins>
