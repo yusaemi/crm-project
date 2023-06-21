@@ -1,11 +1,11 @@
-package com.sample.crm.service;
+package com.sample.crm.api.service;
 
-import com.sample.crm.controller.request.CompanyRequest;
-import com.sample.crm.entity.Company;
-import com.sample.crm.repository.CompanyDao;
-import com.sample.crm.service.dto.CompanyResponse;
+import com.sample.crm.api.domain.CompanyRequest;
+import com.sample.crm.api.domain.CompanyResponse;
+import com.sample.crm.dao.entity.Company;
+import com.sample.crm.dao.repository.CompanyDao;
 import com.sample.crm.util.UserUtil;
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class CompanyService {
     }
 
     public void createCompany(CompanyRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Company company = Company.builder()
                 .name(request.getName())
                 .address(request.getAddress())
@@ -55,7 +55,7 @@ public class CompanyService {
     }
 
     public void updateCompany(int id, CompanyRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Company company = companyDao.findById(id).orElseThrow(() -> new RuntimeException("company is not exist!"));
         company.setName(request.getName());
         company.setAddress(request.getAddress());

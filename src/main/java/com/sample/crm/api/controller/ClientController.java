@@ -1,12 +1,12 @@
-package com.sample.crm.controller;
+package com.sample.crm.api.controller;
 
-import com.sample.crm.controller.request.ClientRequest;
-import com.sample.crm.entity.Client;
-import com.sample.crm.service.ClientService;
-import com.sample.crm.service.dto.ClientResponse;
+import com.sample.crm.api.domain.ClientRequest;
+import com.sample.crm.api.domain.ClientResponse;
+import com.sample.crm.api.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -55,7 +54,7 @@ public class ClientController {
     @Operation(summary = "查詢client")
     @ApiResponse(responseCode = "200", description = "client資料已取得")
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClient(@PathVariable("id") int id) {
+    public ResponseEntity<ClientResponse> getClient(@PathVariable("id") int id) {
         return ResponseEntity.ok(clientService.getClient(id));
     }
 

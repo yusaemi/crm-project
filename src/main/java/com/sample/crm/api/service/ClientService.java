@@ -1,11 +1,11 @@
-package com.sample.crm.service;
+package com.sample.crm.api.service;
 
-import com.sample.crm.controller.request.ClientRequest;
-import com.sample.crm.entity.Client;
-import com.sample.crm.repository.ClientDao;
-import com.sample.crm.service.dto.ClientResponse;
+import com.sample.crm.api.domain.ClientRequest;
+import com.sample.crm.api.domain.ClientResponse;
+import com.sample.crm.dao.entity.Client;
+import com.sample.crm.dao.repository.ClientDao;
 import com.sample.crm.util.UserUtil;
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class ClientService {
     }
 
     public void createClient(ClientRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Client client = Client.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -57,7 +57,7 @@ public class ClientService {
     }
 
     public void updateClient(int id, ClientRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Client client = clientDao.findById(id).orElseThrow(() -> new RuntimeException("client is not exist!"));
         client.setName(request.getName());
         client.setEmail(request.getEmail());

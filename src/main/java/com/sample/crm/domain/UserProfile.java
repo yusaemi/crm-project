@@ -1,4 +1,4 @@
-package com.sample.crm.vo;
+package com.sample.crm.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

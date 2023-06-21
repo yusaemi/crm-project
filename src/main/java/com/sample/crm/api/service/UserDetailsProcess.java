@@ -1,10 +1,10 @@
-package com.sample.crm.service;
+package com.sample.crm.api.service;
 
-import com.sample.crm.entity.Employee;
-import com.sample.crm.repository.EmployeeDao;
+import com.sample.crm.dao.entity.Employee;
+import com.sample.crm.dao.repository.EmployeeDao;
 import com.sample.crm.util.JwtUtil;
 import com.sample.crm.util.StringUtil;
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +15,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 
@@ -38,7 +40,7 @@ public class UserDetailsProcess implements UserDetailsService {
         boolean valid = true;
         UserProfile userProfile = null;
 
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest httpServletRequest = Optional.ofNullable((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).orElseThrow(RuntimeException::new).getRequest();
         String requestURI = httpServletRequest.getRequestURI();
         if (StringUtil.isNotBlank(requestURI) && !requestURI.endsWith("/auth/login")) {
             String redisJwt = jwtUtil.getRedisJwt(username);
