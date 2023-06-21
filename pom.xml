@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<springdoc.version>1.6.14</springdoc.version>
+		<springdoc.version>1.7.0</springdoc.version>
 		<jjwt.version>0.9.1</jjwt.version>
 		<validation-api.version>3.0.2</validation-api.version>
 		<embedded-redis.version>0.7.3</embedded-redis.version>
