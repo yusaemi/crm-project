@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.4</version><!--update spring-boot version -->
+		<version>3.1.4</version><!--update spring-boot version -->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sample.crm</groupId>
@@ -16,12 +16,14 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<springdoc.version>1.6.14</springdoc.version>
+		<springdoc.version>2.2.0</springdoc.version>
 		<jjwt.version>0.9.1</jjwt.version>
+		<h2.version>2.2.220</h2.version>
 		<validation-api.version>3.0.2</validation-api.version>
 		<embedded-redis.version>0.7.3</embedded-redis.version>
 		<commons-io.version>2.11.0</commons-io.version>
 		<guava.version>31.1-jre</guava.version>
+		<snakeyaml.version>2.1</snakeyaml.version>
 		<micrometer-tracing.version>1.0.1</micrometer-tracing.version>
 		<resource.delimiter>@</resource.delimiter>
 	</properties>
@@ -30,6 +32,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>snakeyaml</artifactId>
+					<groupId>org.yaml</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -56,6 +64,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -89,8 +98,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>snakeyaml</artifactId>
+					<groupId>org.yaml</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -117,6 +132,10 @@
 					<groupId>commons-io</groupId>
 					<artifactId>commons-io</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
@@ -136,6 +155,13 @@
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.4.0-b180830.0359</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>${snakeyaml.version}</version>
 		</dependency>
 
 		<dependency>
@@ -161,20 +187,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- 解決spring-boot:run console中文亂碼 -->
-				<configuration>
-					<!-- 新增jvm參數 -->
-					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 	<!-- environment -->
 	<profiles>

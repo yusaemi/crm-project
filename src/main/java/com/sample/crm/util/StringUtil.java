@@ -51,9 +51,22 @@ public final class StringUtil {
         return isBlank(text) ? defaultStr : text;
     }
 
+    public static boolean isAnyBlank(String... text) {
+        return Arrays.stream(text).anyMatch(StringUtil::isBlank);
+    }
+
+    public static boolean isAnyNotBlank(String... text) {
+        return Arrays.stream(text).anyMatch(StringUtil::isNotBlank);
+    }
+
     public static boolean equals(@Nullable String text1, @Nullable String text2) {
         if (text1 == null) return text2 == null;
         return text1.equals(text2);
+    }
+
+    public static boolean equalsIgnoreCase(@Nullable String text1, @Nullable String text2) {
+        if (text1 == null) return text2 == null;
+        return text1.equalsIgnoreCase(text2);
     }
 
     public static boolean equalsAny(@Nullable String text1, @NonNull String... text2) {
@@ -62,6 +75,10 @@ public final class StringUtil {
 
     public static boolean equalsAny(@Nullable String text1, @NonNull List<String> text2s) {
         return text2s.contains(text1);
+    }
+
+    public static <T> T equalsTernary(String str1, String str2, T flagTrue, T flagFalse) {
+        return equals(str1, str2) ? flagTrue : flagFalse;
     }
 
     public static String bytesToHex(byte[] bytes) {
@@ -178,53 +195,25 @@ public final class StringUtil {
     }
 
     /**
-     * 阿拉伯數字整數金額轉中文數字金額(省略單位，支援單位長度到億)
+     * 取得指定字串中間的文本
      *
-     * @param amount amount
-     * @return String
+     * @param str 處理文本
+     * @param open 擷取起頭(不含，且第一位符合的位置)
+     * @param close 擷取結尾(不含，且第一位符合的位置)
+     * @return 擷取文本
      */
-    public static String arabicToKanji(BigDecimal amount) {
-
-        char[] kanjiNums = "零壹貳參肆伍陸柒捌玖".toCharArray();
-        String[] u1 = {"", "拾", "佰", "仟"};
-        String[] u2 = {"", "萬", "億"};
-
-        String amountStr = TypesUtil.parseStr(amount);
-
-        if (isBlank(amountStr) || !amountStr.matches("^(0|[1-9]\\d{0,11})$")) {
-            throw new IllegalArgumentException("參數錯誤。");
+    public static String getTextBetween2String(String str, String open, String close) {
+        if (isAnyBlank(str, open, close)) {
+            return null;
         }
-
-        if (equals("0", amountStr)) {
-            return "零";
-        }
-
-        StringBuilder result = new StringBuilder();
-        // 從個位數開始轉換
-        for (int i = amountStr.length() - 1, j = 0; i >= 0; i--, j++) {
-            char n = amountStr.charAt(i);
-            if (n == '0') {
-                // 當n為0且0的右邊一位不是0時，append零
-                if (i < amountStr.length() - 1 && amountStr.charAt(i + 1) != '0') {
-                    result.append(kanjiNums[0]);
-                }
-                // append萬或億
-                if (j % 4 == 0
-                        && (i > 0 && amountStr.charAt(i - 1) != '0'
-                        || i > 1 && amountStr.charAt(i - 2) != '0'
-                        || i > 2 && amountStr.charAt(i - 3) != '0')) {
-                    result.append(u2[j / 4]);
-                }
-            } else {
-                if (j % 4 == 0) {
-                    result.append(u2[j / 4]); // append萬或億
-                }
-                result.append(u1[j % 4]); // append拾、佰或仟
-                result.append(kanjiNums[n - '0']); // append數字
+        final int start = str.indexOf(open);
+        if (start != -1) {
+            final int end = str.indexOf(close, start + open.length());
+            if (end != -1) {
+                return str.substring(start + open.length(), end);
             }
         }
-
-        return result.reverse().toString();
+        return null;
     }
 
 }

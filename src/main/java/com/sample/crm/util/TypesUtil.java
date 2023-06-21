@@ -52,8 +52,8 @@ public final class TypesUtil {
             return null;
         BigDecimal bigDecimal = null;
         if (object instanceof Number || object instanceof String) {
-            String str = parseStr(object);
-            if (StringUtil.isNotBlank(str) && str.matches(NUMBER_PATTERN_REGEX)) {
+            String str = StringUtil.defaultBlank(parseStr(object), StringUtil.EMPTY);
+            if (str.matches(NUMBER_PATTERN_REGEX)) {
                 bigDecimal = new BigDecimal(str);
             }
         }
@@ -75,8 +75,8 @@ public final class TypesUtil {
         }
 
         Integer integer = null;
-        String str = parseStr(object);
-        if (StringUtil.isNotBlank(str) && str.matches("[+-]?\\d+")) {
+        String str = StringUtil.defaultBlank(parseStr(object), StringUtil.EMPTY);
+        if (str.matches("[+-]?\\d+")) {
             integer = Integer.parseInt(str);
         }
         return integer;
@@ -90,8 +90,6 @@ public final class TypesUtil {
      * @return String
      */
     public static String parseStrZeroPadding(Object object, int formatLength) {
-        if (object == null || typeInvalid(object))
-            return null;
         String str = null;
         Integer integer = parseInteger(object);
         if (integer != null) {
@@ -113,8 +111,8 @@ public final class TypesUtil {
      */
     public static <T, U> U parseNumber(T number, U defaultValue, Class<U> parseClass) {
         U result = defaultValue;
-        String numStr = parseStr(number);
-        if (number instanceof Number || StringUtil.isNotBlank(numStr) && numStr.matches(NUMBER_PATTERN_REGEX)) {
+        String numStr = StringUtil.defaultBlank(parseStr(number), StringUtil.EMPTY);
+        if (number instanceof Number || numStr.matches(NUMBER_PATTERN_REGEX)) {
             BigDecimal numDecimal = new BigDecimal(numStr);
             switch (parseClass.getSimpleName()) {
                 case "Integer":

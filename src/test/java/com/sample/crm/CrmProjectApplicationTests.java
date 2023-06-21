@@ -1,17 +1,17 @@
 package com.sample.crm;
 
-import com.sample.crm.controller.request.ClientRequest;
-import com.sample.crm.controller.request.CompanyRequest;
-import com.sample.crm.entity.Client;
-import com.sample.crm.entity.Company;
-import com.sample.crm.repository.ClientDao;
-import com.sample.crm.repository.CompanyDao;
-import com.sample.crm.service.ClientService;
-import com.sample.crm.service.CompanyService;
-import com.sample.crm.service.dto.ClientResponse;
-import com.sample.crm.service.dto.CompanyResponse;
+import com.sample.crm.api.domain.ClientRequest;
+import com.sample.crm.api.domain.CompanyRequest;
+import com.sample.crm.dao.entity.Client;
+import com.sample.crm.dao.entity.Company;
+import com.sample.crm.dao.repository.ClientDao;
+import com.sample.crm.dao.repository.CompanyDao;
+import com.sample.crm.api.service.ClientService;
+import com.sample.crm.api.service.CompanyService;
+import com.sample.crm.api.domain.ClientResponse;
+import com.sample.crm.api.domain.CompanyResponse;
 import com.sample.crm.util.UserUtil;
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -73,7 +73,7 @@ class CrmProjectApplicationTests {
 		Mockito.when(companyDaoMock.findById(1)).thenReturn(Optional.of(mockCompany1));
 		Mockito.when(companyDaoMock.findById(3)).thenThrow(new RuntimeException("companyDaoMock mock throw exception"));
 
-		Mockito.when(userUtilMock.getUserProfile()).thenReturn(
+		Mockito.when(userUtilMock.get()).thenReturn(
 				UserProfile.builder()
 						.username("mockUsername")
 						.password("mockPwd")
@@ -88,10 +88,9 @@ class CrmProjectApplicationTests {
 	@DisplayName("ClientService - Test getClients")
 	@Test
 	void getClients() {
-		List<ClientResponse> clientResponses = clientServiceMocks.getClients();
+		List<Integer> clientResponseIds = clientServiceMocks.getClients().stream().map(ClientResponse::getId).toList();
 		verify(clientDaoMock, times(1)).findAll();
-		Assertions.assertEquals(clientResponses.size(), this.clients.size());
-		Assertions.assertEquals(clientResponses.get(0).getId(), this.clients.get(0).getId());
+		Assertions.assertIterableEquals(clientResponseIds, clients.stream().map(Client::getId).toList());
 	}
 
 	@Order(2)
@@ -115,7 +114,7 @@ class CrmProjectApplicationTests {
 		}
 		verify(clientDaoMock, times(1)).findById(1);
 		verify(clientDaoMock, times(1)).findById(3);
-		Assertions.assertEquals(clientResponse.getId(), this.clients.get(0).getId());
+		Assertions.assertEquals(clientResponse.getId(), clients.get(0).getId());
 	}
 
 	@Order(4)
@@ -168,9 +167,9 @@ class CrmProjectApplicationTests {
 	@DisplayName("CompanyService - Test getCompanies")
 	@Test
 	void getCompanies() {
-		List<CompanyResponse> companyResponses = companyServiceMocks.getCompanies();
+		List<Integer> companyResponseId = companyServiceMocks.getCompanies().stream().map(CompanyResponse::getId).toList();
 		verify(companyDaoMock, times(1)).findAll();
-		Assertions.assertEquals(companyResponses, this.companies);
+		Assertions.assertIterableEquals(companyResponseId, companies.stream().map(Company::getId).toList());
 	}
 
 	@Order(8)
@@ -194,7 +193,7 @@ class CrmProjectApplicationTests {
 		}
 		verify(companyDaoMock, times(1)).findById(1);
 		verify(companyDaoMock, times(1)).findById(3);
-		Assertions.assertEquals(companyResponse, this.companies.get(0));
+		Assertions.assertEquals(companyResponse.getId(), companies.get(0).getId());
 	}
 
 	@Order(10)
@@ -228,10 +227,6 @@ class CrmProjectApplicationTests {
 		verify(companyDaoMock, times(1)).findById(1);
 		verify(companyDaoMock, times(1)).findById(3);
 		verify(companyDaoMock, times(1)).delete(any(Company.class));
-	}
-
-	@Test
-	void contextLoads() {
 	}
 
 }

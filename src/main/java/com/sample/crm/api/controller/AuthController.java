@@ -1,7 +1,7 @@
-package com.sample.crm.controller;
+package com.sample.crm.api.controller;
 
-import com.sample.crm.controller.request.EmployeeRequest;
-import com.sample.crm.service.AuthService;
+import com.sample.crm.api.domain.EmployeeRequest;
+import com.sample.crm.api.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

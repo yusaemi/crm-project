@@ -1,6 +1,6 @@
 package com.sample.crm.util;
 
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

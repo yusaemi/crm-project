@@ -1,4 +1,4 @@
-package com.sample.crm.entity;
+package com.sample.crm.dao.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,9 +30,8 @@ import java.util.List;
  **/
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Builder
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -39,6 +39,7 @@ import java.util.List;
 @Schema(name = "company資訊")
 public class Company implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

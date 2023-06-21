@@ -1,12 +1,12 @@
-package com.sample.crm.controller;
+package com.sample.crm.api.controller;
 
-import com.sample.crm.controller.request.CompanyRequest;
-import com.sample.crm.entity.Company;
-import com.sample.crm.service.CompanyService;
-import com.sample.crm.service.dto.CompanyResponse;
+import com.sample.crm.api.domain.CompanyRequest;
+import com.sample.crm.api.domain.CompanyResponse;
+import com.sample.crm.api.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -55,7 +54,7 @@ public class CompanyController {
     @Operation(summary = "查詢company")
     @ApiResponse(responseCode = "200", description = "company資料已取得")
     @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompany(@PathVariable("id") int id) {
+    public ResponseEntity<CompanyResponse> getCompany(@PathVariable("id") int id) {
         return ResponseEntity.ok(companyService.getCompany(id));
     }
 

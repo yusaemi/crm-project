@@ -1,11 +1,11 @@
 package com.sample.crm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sample.crm.controller.request.EmployeeRequest;
-import com.sample.crm.entity.Client;
-import com.sample.crm.entity.Employee;
-import com.sample.crm.repository.ClientDao;
-import com.sample.crm.repository.EmployeeDao;
+import com.sample.crm.api.domain.EmployeeRequest;
+import com.sample.crm.dao.entity.Client;
+import com.sample.crm.dao.entity.Employee;
+import com.sample.crm.dao.repository.ClientDao;
+import com.sample.crm.dao.repository.EmployeeDao;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

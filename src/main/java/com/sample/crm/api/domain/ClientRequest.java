@@ -1,7 +1,7 @@
-package com.sample.crm.controller.request;
+package com.sample.crm.api.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sample.crm.entity.Client;
+import com.sample.crm.dao.entity.Client;
 
 /**
  * ClientRequest. 2020/11/22 4:20 上午

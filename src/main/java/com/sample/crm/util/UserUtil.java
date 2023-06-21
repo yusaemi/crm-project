@@ -1,6 +1,6 @@
 package com.sample.crm.util;
 
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserUtil {
 
-    public UserProfile getUserProfile() {
+    public UserProfile get() {
         return (UserProfile) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 

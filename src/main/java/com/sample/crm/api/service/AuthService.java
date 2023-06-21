@@ -1,8 +1,8 @@
-package com.sample.crm.service;
+package com.sample.crm.api.service;
 
-import com.sample.crm.controller.request.EmployeeRequest;
+import com.sample.crm.api.domain.EmployeeRequest;
 import com.sample.crm.util.JwtUtil;
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
