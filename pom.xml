@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.4</version><!--update spring-boot version -->
+		<version>3.1.0</version><!--update spring-boot version -->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sample.crm</groupId>
@@ -117,6 +117,10 @@
 					<groupId>commons-io</groupId>
 					<artifactId>commons-io</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
@@ -161,20 +165,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- 解決spring-boot:run console中文亂碼 -->
-				<configuration>
-					<!-- 新增jvm參數 -->
-					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 	<!-- environment -->
 	<profiles>
