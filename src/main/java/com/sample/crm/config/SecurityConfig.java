@@ -6,10 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,30 +36,29 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/actuator/health", "/auth/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/**").hasAnyRole("superuser", "operator")
-                .requestMatchers(HttpMethod.PUT, "/**").hasAnyRole("superuser", "manager")
-                .requestMatchers(HttpMethod.DELETE, "/**").hasAnyRole("superuser", "manager")
-                .requestMatchers(
-                        HttpMethod.GET,
-                        "/*.html",
-                        "/*/*.html",
-                        "/*/*.css",
-                        "/*/*.js"
-                ).permitAll()
-                .requestMatchers("/*/api-docs",
-                        "/swagger-resources/**",
-                        "/swagger-ui/index.html",
-                        "/webjars/**").anonymous()
-                .anyRequest().authenticated().and()
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/actuator/health", "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/**").hasAnyRole("superuser", "operator")
+                        .requestMatchers(HttpMethod.PUT, "/**").hasAnyRole("superuser", "manager")
+                        .requestMatchers(HttpMethod.DELETE, "/**").hasAnyRole("superuser", "manager")
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/*.html",
+                                "/*/*.html",
+                                "/*/*.css",
+                                "/*/*.js"
+                        ).permitAll()
+                        .requestMatchers("/*/api-docs",
+                                "/swagger-resources/**",
+                                "/swagger-ui/index.html",
+                                "/webjars/**").anonymous()
+                        .anyRequest().authenticated())
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(tokenFilterConfig, UsernamePasswordAuthenticationFilter.class)
-                .logout().logoutUrl("/auth/logout").logoutSuccessHandler(logoutConfig).and()
-                .headers().cacheControl();
-        return http.build();
+                .logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessHandler(logoutConfig))
+                .headers(headers -> headers.cacheControl(Customizer.withDefaults()))
+                .httpBasic(Customizer.withDefaults()).build();
     }
 
     @Bean
