@@ -16,6 +16,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Optional;
+
 import static java.util.Objects.nonNull;
 
 /**
@@ -38,7 +40,7 @@ public class UserDetailsProcess implements UserDetailsService {
         boolean valid = true;
         UserProfile userProfile = null;
 
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest httpServletRequest = Optional.ofNullable((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).orElseThrow(RuntimeException::new).getRequest();
         String requestURI = httpServletRequest.getRequestURI();
         if (StringUtil.isNotBlank(requestURI) && !requestURI.endsWith("/auth/login")) {
             String redisJwt = jwtUtil.getRedisJwt(username);

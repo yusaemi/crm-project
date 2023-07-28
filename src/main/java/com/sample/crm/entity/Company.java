@@ -11,12 +11,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,8 +29,6 @@ import java.util.List;
  **/
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,6 +37,7 @@ import java.util.List;
 @Schema(name = "company資訊")
 public class Company implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
