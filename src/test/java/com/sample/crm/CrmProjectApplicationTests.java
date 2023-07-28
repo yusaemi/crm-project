@@ -90,8 +90,7 @@ class CrmProjectApplicationTests {
 	void getClients() {
 		List<ClientResponse> clientResponses = clientServiceMocks.getClients();
 		verify(clientDaoMock, times(1)).findAll();
-		Assertions.assertEquals(clientResponses.size(), this.clients.size());
-		Assertions.assertEquals(clientResponses.get(0).getId(), this.clients.get(0).getId());
+		Assertions.assertEquals(clientResponses, clients);
 	}
 
 	@Order(2)
@@ -115,7 +114,7 @@ class CrmProjectApplicationTests {
 		}
 		verify(clientDaoMock, times(1)).findById(1);
 		verify(clientDaoMock, times(1)).findById(3);
-		Assertions.assertEquals(clientResponse.getId(), this.clients.get(0).getId());
+		Assertions.assertEquals(clientResponse, clients.get(0));
 	}
 
 	@Order(4)
@@ -170,7 +169,7 @@ class CrmProjectApplicationTests {
 	void getCompanies() {
 		List<CompanyResponse> companyResponses = companyServiceMocks.getCompanies();
 		verify(companyDaoMock, times(1)).findAll();
-		Assertions.assertEquals(companyResponses, this.companies);
+		Assertions.assertEquals(companyResponses, companies);
 	}
 
 	@Order(8)
@@ -194,7 +193,7 @@ class CrmProjectApplicationTests {
 		}
 		verify(companyDaoMock, times(1)).findById(1);
 		verify(companyDaoMock, times(1)).findById(3);
-		Assertions.assertEquals(companyResponse, this.companies.get(0));
+		Assertions.assertEquals(companyResponse, companies.get(0));
 	}
 
 	@Order(10)
