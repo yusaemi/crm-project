@@ -1,11 +1,12 @@
 package com.sample.crm.config;
 
+import com.sample.crm.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,11 +14,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.Collection;
 
 /**
  * SecurityConfig. 2020/11/20 11:26 上午
@@ -37,22 +42,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/actuator/health", "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/**").hasAnyRole("superuser", "operator")
-                        .requestMatchers(HttpMethod.PUT, "/**").hasAnyRole("superuser", "manager")
-                        .requestMatchers(HttpMethod.DELETE, "/**").hasAnyRole("superuser", "manager")
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/actuator/health"), AntPathRequestMatcher.antMatcher("/auth/login")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).access((authentication, context) -> {
+                            String httpMethod = context.getRequest().getMethod();
+                            Collection<? extends GrantedAuthority> authorities = authentication.get().getAuthorities();
+                            return new AuthorizationDecision(
+                                switch (httpMethod) {
+                                    case "GET", "OPTIONS" -> true;
+                                    case "POST" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), "ROLE_superuser", "ROLE_operator"));
+                                    case "PUT" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), "ROLE_superuser", "ROLE_manager"));
+                                    case "DELETE" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), "ROLE_superuser", "ROLE_manager"));
+                                    default -> false;
+                                });
+                        })
                         .requestMatchers(
-                                HttpMethod.GET,
-                                "/*.html",
-                                "/*/*.html",
-                                "/*/*.css",
-                                "/*/*.js"
-                        ).permitAll()
-                        .requestMatchers("/*/api-docs",
-                                "/swagger-resources/**",
-                                "/swagger-ui/index.html",
-                                "/webjars/**").anonymous()
+                                AntPathRequestMatcher.antMatcher("/*.html"),
+                                AntPathRequestMatcher.antMatcher("/*/*.html"),
+                                AntPathRequestMatcher.antMatcher("/*/*.css"),
+                                AntPathRequestMatcher.antMatcher("/*/*.js")
+                        ).access((authentication, context) -> new AuthorizationDecision(StringUtil.equals("GET", context.getRequest().getMethod())))
+                        .requestMatchers(
+                                AntPathRequestMatcher.antMatcher("/api/v1/auth/**"),
+                                AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
+                                AntPathRequestMatcher.antMatcher("/v3/api-docs.yaml"),
+                                AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
+                                AntPathRequestMatcher.antMatcher("/swagger-ui.html")).anonymous()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(tokenFilterConfig, UsernamePasswordAuthenticationFilter.class)
@@ -63,7 +78,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers("/h2-console/**");
+        return web -> web.ignoring().requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"));
     }
 
     @Bean
