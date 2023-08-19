@@ -1,4 +1,4 @@
-package com.sample.crm.entity;
+package com.sample.crm.dao.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;

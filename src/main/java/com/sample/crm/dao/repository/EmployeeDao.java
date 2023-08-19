@@ -1,6 +1,6 @@
-package com.sample.crm.repository;
+package com.sample.crm.dao.repository;
 
-import com.sample.crm.entity.Employee;
+import com.sample.crm.dao.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

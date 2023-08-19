@@ -1,5 +1,6 @@
 package com.sample.crm.config;
 
+import com.sample.crm.domain.RoleEnum;
 import com.sample.crm.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -50,9 +51,8 @@ public class SecurityConfig {
                             return new AuthorizationDecision(
                                 switch (httpMethod) {
                                     case "GET", "OPTIONS" -> true;
-                                    case "POST" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), "ROLE_superuser", "ROLE_operator"));
-                                    case "PUT" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), "ROLE_superuser", "ROLE_manager"));
-                                    case "DELETE" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), "ROLE_superuser", "ROLE_manager"));
+                                    case "POST" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), RoleEnum.SUPERUSER.getCode(), RoleEnum.OPERATOR.getCode()));
+                                    case "PUT", "DELETE" -> authorities.stream().anyMatch(authority -> StringUtil.equalsAny(authority.toString(), RoleEnum.SUPERUSER.getCode(), RoleEnum.MANAGER.getCode()));
                                     default -> false;
                                 });
                         })

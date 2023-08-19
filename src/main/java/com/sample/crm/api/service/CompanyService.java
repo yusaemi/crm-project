@@ -1,11 +1,11 @@
-package com.sample.crm.service;
+package com.sample.crm.api.service;
 
-import com.sample.crm.controller.request.CompanyRequest;
-import com.sample.crm.entity.Company;
-import com.sample.crm.repository.CompanyDao;
-import com.sample.crm.service.dto.CompanyResponse;
+import com.sample.crm.api.domain.CompanyRequest;
+import com.sample.crm.api.domain.CompanyResponse;
+import com.sample.crm.dao.entity.Company;
+import com.sample.crm.dao.repository.CompanyDao;
 import com.sample.crm.util.UserUtil;
-import com.sample.crm.vo.UserProfile;
+import com.sample.crm.domain.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

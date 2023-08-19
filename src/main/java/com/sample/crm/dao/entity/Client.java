@@ -1,4 +1,4 @@
-package com.sample.crm.entity;
+package com.sample.crm.dao.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -12,7 +12,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +29,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

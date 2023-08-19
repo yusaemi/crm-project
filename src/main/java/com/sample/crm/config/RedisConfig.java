@@ -23,7 +23,7 @@ public class RedisConfig {
 
     @PostConstruct
     public void startRedis() {
-        redisServer = new RedisServer(redisPort);
+        redisServer = RedisServer.builder().port(redisPort).setting("maxheap 128M").build();
         redisServer.start();
     }
 
