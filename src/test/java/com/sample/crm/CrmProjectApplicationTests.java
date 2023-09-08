@@ -73,7 +73,7 @@ class CrmProjectApplicationTests {
 		Mockito.when(companyDaoMock.findById(1)).thenReturn(Optional.of(mockCompany1));
 		Mockito.when(companyDaoMock.findById(3)).thenThrow(new RuntimeException("companyDaoMock mock throw exception"));
 
-		Mockito.when(userUtilMock.getUserProfile()).thenReturn(
+		Mockito.when(userUtilMock.get()).thenReturn(
 				UserProfile.builder()
 						.username("mockUsername")
 						.password("mockPwd")

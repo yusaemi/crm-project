@@ -38,7 +38,7 @@ public class ClientService {
     }
 
     public void createClient(ClientRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Client client = Client.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -57,7 +57,7 @@ public class ClientService {
     }
 
     public void updateClient(int id, ClientRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Client client = clientDao.findById(id).orElseThrow(() -> new RuntimeException("client is not exist!"));
         client.setName(request.getName());
         client.setEmail(request.getEmail());

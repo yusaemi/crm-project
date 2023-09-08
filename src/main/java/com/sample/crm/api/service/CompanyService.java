@@ -38,7 +38,7 @@ public class CompanyService {
     }
 
     public void createCompany(CompanyRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Company company = Company.builder()
                 .name(request.getName())
                 .address(request.getAddress())
@@ -55,7 +55,7 @@ public class CompanyService {
     }
 
     public void updateCompany(int id, CompanyRequest request) {
-        UserProfile userProfile = userUtil.getUserProfile();
+        UserProfile userProfile = userUtil.get();
         Company company = companyDao.findById(id).orElseThrow(() -> new RuntimeException("company is not exist!"));
         company.setName(request.getName());
         company.setAddress(request.getAddress());

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserUtil {
 
-    public UserProfile getUserProfile() {
+    public UserProfile get() {
         return (UserProfile) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
