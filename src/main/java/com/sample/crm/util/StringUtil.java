@@ -72,7 +72,7 @@ public final class StringUtil {
             }
             sb.append(Integer.toHexString(intVal));
         }
-        return sb.toString();
+        return sb.toString().toUpperCase();
     }
 
     /**
