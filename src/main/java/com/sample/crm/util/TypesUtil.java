@@ -90,8 +90,6 @@ public final class TypesUtil {
      * @return String
      */
     public static String parseStrZeroPadding(Object object, int formatLength) {
-        if (object == null || typeInvalid(object))
-            return null;
         String str = null;
         Integer integer = parseInteger(object);
         if (integer != null) {
