@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version><!--update spring-boot version -->
+		<version>3.2.2</version><!--update spring-boot version -->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sample.crm</groupId>
@@ -14,17 +14,38 @@
 	<name>crm-project</name>
 	<description>CRM project(API only)</description>
 
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<properties>
-		<java.version>17</java.version>
-		<springdoc.version>2.2.0</springdoc.version>
+		<java.version>21</java.version>
+		<springdoc.version>2.3.0</springdoc.version>
 		<jjwt.version>0.9.1</jjwt.version>
-		<h2.version>2.2.220</h2.version>
+		<h2.version>2.2.224</h2.version>
 		<validation-api.version>3.0.2</validation-api.version>
 		<embedded-redis.version>0.7.3</embedded-redis.version>
-		<commons-io.version>2.11.0</commons-io.version>
-		<guava.version>31.1-jre</guava.version>
-		<snakeyaml.version>2.1</snakeyaml.version>
-		<micrometer-tracing.version>1.0.1</micrometer-tracing.version>
+		<commons-io.version>2.15.1</commons-io.version>
+		<guava.version>33.0.0-jre</guava.version>
+		<snakeyaml.version>2.2</snakeyaml.version>
+		<micrometer-tracing.version>1.2.0</micrometer-tracing.version>
 		<resource.delimiter>@</resource.delimiter>
 	</properties>
 
