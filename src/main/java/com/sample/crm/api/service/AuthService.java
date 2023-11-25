@@ -1,8 +1,8 @@
 package com.sample.crm.api.service;
 
 import com.sample.crm.api.domain.EmployeeRequest;
-import com.sample.crm.util.JwtUtil;
-import com.sample.crm.domain.UserProfile;
+import com.sample.crm.system.service.TokenService;
+import com.sample.crm.system.domain.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
+    private final TokenService tokenService;
 
     public String login(EmployeeRequest request) {
         String username = request.getUsername();
@@ -30,7 +30,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         UserProfile userProfile = (UserProfile) authenticate.getPrincipal();
-        return jwtUtil.generateJwt(userProfile);
+        return tokenService.generate(username, userProfile.getRole());
     }
 
 }

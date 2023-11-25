@@ -24,7 +24,7 @@ public final class ListUtil {
     }
 
     @SafeVarargs
-    public static <T> List<T> asList(T... element) {
+    public static <T> List<T> as(T... element) {
         if (element.length == 1) {
             return Collections.singletonList(element[0]);
         }
