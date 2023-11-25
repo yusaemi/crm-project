@@ -1,4 +1,4 @@
-package com.sample.crm.config;
+package com.sample.crm.system.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

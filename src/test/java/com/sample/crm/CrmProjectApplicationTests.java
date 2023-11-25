@@ -11,7 +11,7 @@ import com.sample.crm.api.service.CompanyService;
 import com.sample.crm.api.domain.ClientResponse;
 import com.sample.crm.api.domain.CompanyResponse;
 import com.sample.crm.util.UserUtil;
-import com.sample.crm.domain.UserProfile;
+import com.sample.crm.system.domain.UserProfile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

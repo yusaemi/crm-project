@@ -1,6 +1,6 @@
 package com.sample.crm.util;
 
-import com.sample.crm.domain.UserProfile;
+import com.sample.crm.system.domain.UserProfile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 

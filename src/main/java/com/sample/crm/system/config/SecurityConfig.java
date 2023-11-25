@@ -1,6 +1,6 @@
-package com.sample.crm.config;
+package com.sample.crm.system.config;
 
-import com.sample.crm.domain.RoleEnum;
+import com.sample.crm.system.domain.RoleEnum;
 import com.sample.crm.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

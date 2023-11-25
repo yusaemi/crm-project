@@ -1,6 +1,6 @@
-package com.sample.crm.config;
+package com.sample.crm.system.config;
 
-import com.sample.crm.util.JwtUtil;
+import com.sample.crm.system.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -13,12 +13,12 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class LogoutConfig implements LogoutSuccessHandler {
 
-    private final JwtUtil jwtUtil;
+    private final TokenService tokenService;
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        String jwt = jwtUtil.getJwt(request);
-        jwtUtil.deleteRedisJwt(jwt);
+        String jwt = tokenService.getJwt(request);
+        tokenService.deleteRedisJwt(jwt);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.sample.crm.domain;
+package com.sample.crm.system.domain;
 
 import lombok.Getter;
 

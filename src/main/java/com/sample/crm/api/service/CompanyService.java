@@ -5,7 +5,7 @@ import com.sample.crm.api.domain.CompanyResponse;
 import com.sample.crm.dao.entity.Company;
 import com.sample.crm.dao.repository.CompanyDao;
 import com.sample.crm.util.UserUtil;
-import com.sample.crm.domain.UserProfile;
+import com.sample.crm.system.domain.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

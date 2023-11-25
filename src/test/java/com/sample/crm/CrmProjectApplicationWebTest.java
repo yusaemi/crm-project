@@ -150,6 +150,7 @@ class CrmProjectApplicationWebTest {
 
     }
 
+    @SuppressWarnings("squid:S5778")
     @Order(2)
     @DisplayName("Permission - Test modify permission")
     @Test
@@ -190,6 +191,7 @@ class CrmProjectApplicationWebTest {
         }
     }
 
+    @SuppressWarnings("squid:S5778")
     @Order(3)
     @DisplayName("Permission - Test delete permission")
     @Test
@@ -222,6 +224,7 @@ class CrmProjectApplicationWebTest {
         }
     }
 
+    @SuppressWarnings("squid:S5778")
     @Order(4)
     @DisplayName("Permission - Test create permission")
     @Test
