@@ -1,4 +1,4 @@
-package com.sample.crm.config;
+package com.sample.crm.system.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

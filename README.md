@@ -1,9 +1,9 @@
 # CRM Project
 
 ## tools/technologies 使用技術列表
-- JDK17
+- JDK21
 - Apache Maven
-- Spring Boot 3.2.0-M3
+- Spring Boot 3.2.2
 - Spring Boot actuator
 - Spring Data JPA
 - Micrometer Tracing
@@ -13,7 +13,7 @@
 - Jackson
 - JUnit5
 - Lombok
-- SwaggerUI 3.0
+- OpenAPI 2.3.0
 - Intellij IDEA
 - Git
 - Sourcetree
@@ -50,7 +50,7 @@
 ## Deploy and Run
 ##### spring-boot run:
 - `mvn spring-boot:run`  
-##### dokcer image build:
+##### docker image build:
 - `mvn clean package -Dmaven.test.skip=true`
 - `docker build -t crm-project:v0.0.1 .`
 ##### docker image run :

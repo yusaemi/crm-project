@@ -33,7 +33,7 @@ public final class TypesUtil {
         String result = String.valueOf(object);
         // 防止科學記號問題，自我轉換
         if (object instanceof BigDecimal || result.matches(SCIENTIFIC_NOTATION_REGEX)) {
-            BigDecimal resultBd = object instanceof BigDecimal ? ((BigDecimal) object) : new BigDecimal(result);
+            BigDecimal resultBd = object instanceof BigDecimal begDecimal ? begDecimal : new BigDecimal(result);
             result = resultBd.toPlainString();
         } else {
             result = String.valueOf(object);
@@ -70,8 +70,8 @@ public final class TypesUtil {
         if (object == null || typeInvalid(object)) {
             return null;
         }
-        if (object instanceof BigDecimal) {
-            return ((BigDecimal) object).intValue();
+        if (object instanceof BigDecimal begDecimal) {
+            return begDecimal.intValue();
         }
 
         Integer integer = null;
@@ -175,20 +175,10 @@ public final class TypesUtil {
 
     private static boolean typeInvalid(Object object) {
         Class<?> parseClass = object.getClass();
-        switch (parseClass.getSimpleName()) {
-            case "String":
-            case "Byte":
-            case "Integer":
-            case "Double":
-            case "Long":
-            case "Float":
-            case "Short":
-            case "BigDecimal":
-            case "BigInteger":
-                return false;
-            default:
-                return true;
-        }
+        return switch (parseClass.getSimpleName()) {
+            case "String", "Byte", "Integer", "Double", "Long", "Float", "Short", "BigDecimal", "BigInteger" -> false;
+            default -> true;
+        };
     }
 
 }
