@@ -3,7 +3,7 @@
 ## tools/technologies 使用技術列表
 - JDK21
 - Apache Maven
-- Spring Boot 3.2.2
+- Spring Boot 3.2.3
 - Spring Boot actuator
 - Spring Data JPA
 - Micrometer Tracing
