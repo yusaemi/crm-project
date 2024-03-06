@@ -7,6 +7,8 @@ import org.springframework.lang.Nullable;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -212,6 +214,23 @@ public final class StringUtil {
             }
         }
         return null;
+    }
+
+    public static String snakeToUpperCamel(String snake) {
+        List<String> parts = transToList(snake, "_");
+        return parts.stream()
+                .map(part -> part.substring(0, 1).toUpperCase() + part.substring(1).toLowerCase())
+                .collect(Collectors.joining());
+    }
+
+    public static String snakeToLowerCamel(String snake) {
+        List<String> parts = transToList(snake, "_");
+        return IntStream.range(0, parts.size())
+                .mapToObj(index -> {
+                    String part = parts.get(index);
+                    return index == 0 ? part.toLowerCase() : part.substring(0, 1).toUpperCase() + part.substring(1).toLowerCase();
+                })
+                .collect(Collectors.joining());
     }
 
 }
