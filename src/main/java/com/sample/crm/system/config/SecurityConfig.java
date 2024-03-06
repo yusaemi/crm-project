@@ -1,6 +1,7 @@
 package com.sample.crm.system.config;
 
 import com.sample.crm.system.domain.RoleEnum;
+import com.sample.crm.system.domain.SecurityConstant;
 import com.sample.crm.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +45,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/actuator/health"), AntPathRequestMatcher.antMatcher("/auth/login")).permitAll()
+                        .requestMatchers(SecurityConstant.URL_IGNORE.toArray(new AntPathRequestMatcher[0])).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).access((authentication, context) -> {
                             String httpMethod = context.getRequest().getMethod();
                             Collection<? extends GrantedAuthority> authorities = authentication.get().getAuthorities();
