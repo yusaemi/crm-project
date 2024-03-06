@@ -7,6 +7,10 @@ import org.springframework.lang.Nullable;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -65,6 +69,10 @@ public final class StringUtil {
     public static boolean equalsIgnoreCase(@Nullable String text1, @Nullable String text2) {
         if (text1 == null) return text2 == null;
         return text1.equalsIgnoreCase(text2);
+    }
+
+    public static boolean equalsAnyIgnoreCase(@Nullable String text1, @NonNull String... text2) {
+        return Arrays.stream(text2).anyMatch(text -> text.equalsIgnoreCase(text1));
     }
 
     public static boolean equalsAny(@Nullable String text1, @NonNull String... text2) {
@@ -212,6 +220,70 @@ public final class StringUtil {
             }
         }
         return null;
+    }
+
+    public static String snakeToUpperCamel(String snake) {
+        List<String> parts = transToList(snake, "_");
+        return parts.stream()
+                .map(part -> part.substring(0, 1).toUpperCase() + part.substring(1).toLowerCase())
+                .collect(Collectors.joining());
+    }
+
+    public static String snakeToLowerCamel(String snake) {
+        List<String> parts = transToList(snake, "_");
+        return IntStream.range(0, parts.size())
+                .mapToObj(index -> {
+                    String part = parts.get(index);
+                    return index == 0 ? part.toLowerCase() : part.substring(0, 1).toUpperCase() + part.substring(1).toLowerCase();
+                })
+                .collect(Collectors.joining());
+    }
+
+    public static String camelToUpperSnake(String camel) {
+        if (isBlank(camel)) {
+            return camel;
+        }
+        StringBuilder snakeCase = new StringBuilder();
+        snakeCase.append(Character.toUpperCase(camel.charAt(0)));
+        for (int i = 1; i < camel.length(); i++) {
+            char ch = camel.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                snakeCase.append('_');
+                snakeCase.append(ch);
+            } else {
+                snakeCase.append(Character.toUpperCase(ch));
+            }
+        }
+        return snakeCase.toString();
+    }
+
+    public static String camelToLowerSnake(String camel) {
+        if (isBlank(camel)) {
+            return camel;
+        }
+        StringBuilder snakeCase = new StringBuilder();
+        snakeCase.append(Character.toLowerCase(camel.charAt(0)));
+        for (int i = 1; i < camel.length(); i++) {
+            char ch = camel.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                snakeCase.append('_');
+                snakeCase.append(Character.toLowerCase(ch));
+            } else {
+                snakeCase.append(ch);
+            }
+        }
+        return snakeCase.toString();
+    }
+
+    public static <T> T getGuardedAccess(char[] chars, Function<char[], T> function) {
+        T result = function.apply(chars);
+        Arrays.fill(chars, '\u0000');
+        return result;
+    }
+
+    public static void guardedAccess(char[] chars, Consumer<char[]> consumer) {
+        consumer.accept(chars);
+        Arrays.fill(chars, '\u0000');
     }
 
 }
