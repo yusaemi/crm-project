@@ -233,4 +233,40 @@ public final class StringUtil {
                 .collect(Collectors.joining());
     }
 
+    public static String camelToUpperSnake(String camel) {
+        if (isBlank(camel)) {
+            return camel;
+        }
+        StringBuilder snakeCase = new StringBuilder();
+        snakeCase.append(Character.toUpperCase(camel.charAt(0)));
+        for (int i = 1; i < camel.length(); i++) {
+            char ch = camel.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                snakeCase.append('_');
+                snakeCase.append(ch);
+            } else {
+                snakeCase.append(Character.toUpperCase(ch));
+            }
+        }
+        return snakeCase.toString();
+    }
+
+    public static String camelToLowerSnake(String camel) {
+        if (isBlank(camel)) {
+            return camel;
+        }
+        StringBuilder snakeCase = new StringBuilder();
+        snakeCase.append(Character.toLowerCase(camel.charAt(0)));
+        for (int i = 1; i < camel.length(); i++) {
+            char ch = camel.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                snakeCase.append('_');
+                snakeCase.append(Character.toLowerCase(ch));
+            } else {
+                snakeCase.append(ch);
+            }
+        }
+        return snakeCase.toString();
+    }
+
 }
