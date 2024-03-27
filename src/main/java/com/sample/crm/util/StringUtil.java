@@ -7,6 +7,8 @@ import org.springframework.lang.Nullable;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -267,6 +269,17 @@ public final class StringUtil {
             }
         }
         return snakeCase.toString();
+    }
+
+    public static <T> T getGuardedAccess(char[] chars, Function<char[], T> function) {
+        T result = function.apply(chars);
+        Arrays.fill(chars, '\u0000');
+        return result;
+    }
+
+    public static void guardedAccess(char[] chars, Consumer<char[]> consumer) {
+        consumer.accept(chars);
+        Arrays.fill(chars, '\u0000');
     }
 
 }
