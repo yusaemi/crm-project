@@ -37,3 +37,15 @@ server:
 logback:
   path: @logback.path@
   name: @logback.name@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    mail:
+      enabled: false
