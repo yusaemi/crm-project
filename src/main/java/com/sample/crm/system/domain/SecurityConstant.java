@@ -14,7 +14,7 @@ import java.util.List;
  **/
 public final class SecurityConstant {
 
-    SecurityConstant() {}
+    private SecurityConstant() {}
 
     public static final String URL_LOGIN = "/auth/login";
     public static final String URL_ACTUATOR_HEALTH = "/actuator/health";
