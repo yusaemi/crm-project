@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5</version><!--update spring-boot version -->
+		<version>3.4.1</version><!--update spring-boot version -->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sample.crm</groupId>
@@ -39,15 +39,14 @@
 		<java.version>21</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<springdoc.version>2.5.0</springdoc.version>
+		<springdoc.version>2.7.0</springdoc.version>
 		<java-jwt.version>4.4.0</java-jwt.version>
-		<h2.version>2.2.224</h2.version>
-		<validation-api.version>3.0.2</validation-api.version>
+		<h2.version>2.3.232</h2.version>
+		<validation-api.version>3.1.0</validation-api.version>
 		<embedded-redis.version>0.7.3</embedded-redis.version>
-		<commons-io.version>2.15.1</commons-io.version>
-		<guava.version>33.0.0-jre</guava.version>
-		<snakeyaml.version>2.2</snakeyaml.version>
-		<micrometer-tracing.version>1.2.0</micrometer-tracing.version>
+		<commons-io.version>2.18.0</commons-io.version>
+		<guava.version>33.3.1-jre</guava.version>
+		<snakeyaml.version>2.3</snakeyaml.version>
 		<resource.delimiter>@</resource.delimiter>
 	</properties>
 
@@ -186,16 +185,6 @@
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>${snakeyaml.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
 
 	</dependencies>
