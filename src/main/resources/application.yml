@@ -23,7 +23,7 @@ spring:
         - classpath:data.sql
   data:
     redis:
-      port: 6999
+      port: 6795
       host: localhost
 
 server:
