@@ -204,15 +204,23 @@
 	<!-- environment -->
 	<profiles>
 		<profile>
-			<id>dev</id>
+			<id>local</id>
 			<properties>
-				<spring.profiles.active>dev</spring.profiles.active>
+				<spring.profiles.active>local</spring.profiles.active>
 				<logback.path>${project.basedir}/logs</logback.path>
 				<logback.name>${project.name}</logback.name>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+				<logback.path>${project.basedir}/logs</logback.path>
+				<logback.name>${project.name}</logback.name>
+			</properties>
 		</profile>
 	</profiles>
 

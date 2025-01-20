@@ -6,12 +6,18 @@ import com.sample.crm.dao.entity.Client;
 import com.sample.crm.dao.entity.Employee;
 import com.sample.crm.dao.repository.ClientDao;
 import com.sample.crm.dao.repository.EmployeeDao;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -42,10 +48,10 @@ class CrmProjectApplicationWebTest {
         this.mockMvc = mockMvc;
     }
 
-    @MockBean
+    @MockitoBean
     private EmployeeDao employeeDaoMock;
 
-    @MockBean
+    @MockitoBean
     private ClientDao clientDaoMock;
 
     private String superuserJwt;
