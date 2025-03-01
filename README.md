@@ -1,7 +1,7 @@
 # CRM Project
 
 ## tools/technologies 使用技術列表
-- JDK21
+- JDK25
 - Apache Maven
 - Spring Boot
 - Spring Boot actuator
