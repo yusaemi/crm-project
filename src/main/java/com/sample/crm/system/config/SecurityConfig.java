@@ -22,7 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 import java.util.Collection;
 
@@ -45,8 +45,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(SecurityConstant.URL_IGNORE.toArray(new AntPathRequestMatcher[0])).permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).access((authentication, context) -> {
+                        .requestMatchers(SecurityConstant.URL_IGNORE.toArray(new PathPatternRequestMatcher[0])).permitAll()
+                        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/**")).access((authentication, context) -> {
                             String httpMethod = context.getRequest().getMethod();
                             Collection<? extends GrantedAuthority> authorities = authentication.get().getAuthorities();
                             return new AuthorizationDecision(
@@ -58,17 +58,17 @@ public class SecurityConfig {
                                 });
                         })
                         .requestMatchers(
-                                AntPathRequestMatcher.antMatcher("/*.html"),
-                                AntPathRequestMatcher.antMatcher("/*/*.html"),
-                                AntPathRequestMatcher.antMatcher("/*/*.css"),
-                                AntPathRequestMatcher.antMatcher("/*/*.js")
+                                PathPatternRequestMatcher.withDefaults().matcher("/*.html"),
+                                PathPatternRequestMatcher.withDefaults().matcher("/*/*.html"),
+                                PathPatternRequestMatcher.withDefaults().matcher("/*/*.css"),
+                                PathPatternRequestMatcher.withDefaults().matcher("/*/*.js")
                         ).access((authentication, context) -> new AuthorizationDecision(StringUtil.equals("GET", context.getRequest().getMethod())))
                         .requestMatchers(
-                                AntPathRequestMatcher.antMatcher("/api/v1/auth/**"),
-                                AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
-                                AntPathRequestMatcher.antMatcher("/v3/api-docs.yaml"),
-                                AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
-                                AntPathRequestMatcher.antMatcher("/swagger-ui.html")).anonymous()
+                                PathPatternRequestMatcher.withDefaults().matcher("/api/v1/auth/**"),
+                                PathPatternRequestMatcher.withDefaults().matcher("/v3/api-docs/**"),
+                                PathPatternRequestMatcher.withDefaults().matcher("/v3/api-docs.yaml"),
+                                PathPatternRequestMatcher.withDefaults().matcher("/swagger-ui/**"),
+                                PathPatternRequestMatcher.withDefaults().matcher("/swagger-ui.html")).anonymous()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(tokenFilterConfig, UsernamePasswordAuthenticationFilter.class)
@@ -79,13 +79,12 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"));
+        return web -> web.ignoring().requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/h2-console/**"));
     }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
