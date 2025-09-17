@@ -11,8 +11,8 @@ import java.util.UUID;
 @SpringBootApplication
 public class CrmProjectApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(CrmProjectApplication.class, args);
+    void main() {
+        SpringApplication.run(CrmProjectApplication.class);
     }
 
     @Bean
