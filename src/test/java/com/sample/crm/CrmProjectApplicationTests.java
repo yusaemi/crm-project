@@ -1,17 +1,17 @@
 package com.sample.crm;
 
 import com.sample.crm.api.domain.ClientRequest;
+import com.sample.crm.api.domain.ClientResponse;
 import com.sample.crm.api.domain.CompanyRequest;
+import com.sample.crm.api.domain.CompanyResponse;
+import com.sample.crm.api.service.ClientService;
+import com.sample.crm.api.service.CompanyService;
 import com.sample.crm.dao.entity.Client;
 import com.sample.crm.dao.entity.Company;
 import com.sample.crm.dao.repository.ClientDao;
 import com.sample.crm.dao.repository.CompanyDao;
-import com.sample.crm.api.service.ClientService;
-import com.sample.crm.api.service.CompanyService;
-import com.sample.crm.api.domain.ClientResponse;
-import com.sample.crm.api.domain.CompanyResponse;
-import com.sample.crm.util.UserUtil;
 import com.sample.crm.system.domain.UserProfile;
+import com.sample.crm.util.UserUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,10 +19,13 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +36,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class CrmProjectApplicationTests {
 
 	@Mock
