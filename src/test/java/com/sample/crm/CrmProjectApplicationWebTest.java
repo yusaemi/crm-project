@@ -269,4 +269,34 @@ class CrmProjectApplicationWebTest {
 
     }
 
+    @Order(5)
+    @DisplayName("Logout - Test jwt is revoked after logout")
+    @Test
+    void logoutRevokeJwtTest() throws Exception {
+
+        String clientJson = objectMapper.writeValueAsString(client);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/clients/1")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(header, jwtPrefix + superuserJwt)
+                        .content(clientJson)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(MockMvcResultHandlers.print()).andReturn();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/auth/logout")
+                        .header(header, jwtPrefix + superuserJwt)
+        ).andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/clients/1")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(header, jwtPrefix + superuserJwt)
+                        .content(clientJson)
+        ).andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(MockMvcResultHandlers.print()).andReturn();
+
+    }
+
 }

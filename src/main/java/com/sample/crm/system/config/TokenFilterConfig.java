@@ -40,7 +40,7 @@ public class TokenFilterConfig extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String jwt = tokenService.getJwt(httpServletRequest);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (StringUtil.isNotBlank(jwt) && isNull(authentication) && tokenService.validate(jwt)) {
+        if (StringUtil.isNotBlank(jwt) && isNull(authentication) && tokenService.validate(jwt) && tokenService.checkRedisJwt(jwt)) {
             String username = tokenService.getUsername(jwt);
             Employee employee = employeeDao.findById(username).orElseThrow(() -> new AccessDeniedException("User not found"));
             UserDetails userDetails = UserProfile.builder()
